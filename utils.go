@@ -1,14 +1,18 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 )
 
 var nowDate = time.Now().Format("2006-01-02 15")
-var secret = fmt.Sprintf("%v%v", nowDate, "dF13ayP")
+var secret = fmt.Sprintf("%v%v", nowDate, "dF13ayZ")
+
+type MapClaims map[string]interface{}
 
 // GenerateToken 生成Token值
 func GenerateToken(mapClaims jwt.MapClaims, key string) (string, error) {
@@ -37,6 +41,29 @@ func ParseToken(tokenString string, secret string) (map[string]interface{}, erro
 	}
 
 	// return claim.Claims.(jwt.MapClaims)["cmd"].(string), nil
+}
+
+type Response map[string]interface{}
+
+func makeResp(w http.ResponseWriter, code int16, msg string, data interface{}) {
+	resp := Response{
+		"code": code,
+		"msg":  msg,
+	}
+	if data != nil {
+		resp["data"] = data
+	}
+	respJson, err := json.Marshal(resp)
+	if err != nil {
+		resp := Response{
+			"code": 201,
+			"msg":  err.Error(),
+		}
+		respJson, _ := json.Marshal(resp)
+		w.Write(respJson)
+		return
+	}
+	w.Write(respJson)
 }
 
 // func main() {

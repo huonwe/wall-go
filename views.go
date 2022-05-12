@@ -6,10 +6,9 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 )
-
-type Response map[string]interface{}
 
 // type Hanashi struct{
 
@@ -42,71 +41,53 @@ func getMessageView(w http.ResponseWriter, req *http.Request) {
 		result := db.Model(&Message{}).Joins("User").Find(&messages)
 		if result.Error != nil {
 			log.Println(result.Error)
-		}
-		// fmt.Println(result)
-
-		resp := Response{
-			"code": 200,
-			"data": messages,
-			"msg":  "success",
+			makeResp(w, 200, result.Error.Error(), nil)
+			return
 		}
 
-		respJson, err := json.Marshal(resp)
-		if err != nil {
-			log.Println(err)
-		}
-		// fmt.Println(string(respJson))
-		w.Write(respJson)
-		// io.WriteString(w, string(respJson))
+		makeResp(w, 200, "success", messages)
+		return
 	}
 }
 
 func addView(w http.ResponseWriter, req *http.Request) {
+	// resp := Response{
+	// 	"code": 201,
+	// 	"msg":  "LOGIN OUTDATED",
+	// }
 	if req.Method == "POST" {
 		token, err := req.Cookie("token")
 		if err != nil {
-			log.Println("ERROR", err)
+			makeResp(w, 201, "login require", nil)
+			return
 		}
 		q, err := ParseToken(token.Value, secret) // 解析token
 		if err != nil {
-			log.Println("ERROR", err)
+			makeResp(w, 201, "login outdated", nil)
+			return
 		}
 		con, _ := ioutil.ReadAll(req.Body)
 		// fmt.Println(string(con))
 		hanashi := new(Message)
 		err = json.Unmarshal(con, hanashi)
 		if err != nil {
-			panic(err)
-		}
-		// UserID, ok := q["UserID"].(uint)
-		UserID := q["UserID"].(uint)
-		// if !ok {
-		// 	resp := Response{
-		// 		"code": 201,
-		// 		"msg":  "UID read failed",
-		// 	}
-		// 	respJson, err := json.Marshal(resp)
-		// 	if err != nil {
-		// 		log.Println(err)
-		// 	}
-		// 	w.Write(respJson)
-		// 	return
-		// }
-		hanashi.UserID = UserID
-		tx := db.Create(&hanashi)
-		if tx.Error != nil {
-			log.Println(err)
+			makeResp(w, 201, err.Error(), nil)
 			return
 		}
-		resp := Response{
-			"code": 200,
-			"msg":  "success",
+
+		// fmt.Println(q["UserID"])
+		UserID := q["UserID"].(string)
+
+		uid, _ := strconv.Atoi(UserID)
+		hanashi.UserID = uint64(uid)
+		tx := db.Create(&hanashi)
+		if tx.Error != nil {
+			makeResp(w, 201, "sql error", nil)
+			return
 		}
-		respJson, err := json.Marshal(resp)
-		if err != nil {
-			log.Println(err)
-		}
-		w.Write(respJson)
+
+		makeResp(w, 200, "success", nil)
+		return
 	} else {
 		w.Write([]byte("method incorrect"))
 	}
@@ -122,13 +103,13 @@ func signUpView(w http.ResponseWriter, req *http.Request) {
 			log.Println(err)
 		}
 		// fmt.Println(user)
-		db.Create(&user)
-		resp := Response{
-			"code": 200,
-			"msg":  "success",
+		result := db.Create(&user)
+		if result.Error != nil {
+			makeResp(w, 201, "sql error", nil)
+			return
 		}
-		respJson, _ := json.Marshal(resp)
-		w.Write(respJson)
+
+		makeResp(w, 200, "success", nil)
 	} else {
 		w.Write([]byte("method incorrect"))
 	}
@@ -142,21 +123,18 @@ func signInView(w http.ResponseWriter, req *http.Request) {
 		err := json.Unmarshal(con, user)
 		if err != nil {
 			log.Println(err)
+			makeResp(w, 201, err.Error(), nil)
+			return
 		}
 
 		// user_found := new(User)
 		db.Where(&User{UserName: user.UserName, Password: user.Password}).First(&user)
 		if user.ID == 0 {
-			resp := Response{
-				"code": 201,
-				"msg":  "账号名或密码错误",
-			}
-			respJson, _ := json.Marshal(resp)
-			w.Write(respJson)
-
+			makeResp(w, 201, "账号名或密码错误", nil)
+			return
 		} else {
 			dict := make(map[string]interface{})
-			dict["UserID"] = user.ID
+			dict["UserID"] = strconv.FormatUint(user.ID, 10)
 			// dict[""] = 18
 			// fmt.Println(secret)
 			tokenNew, err := GenerateToken(dict, secret) // 生成token
@@ -170,14 +148,8 @@ func signInView(w http.ResponseWriter, req *http.Request) {
 				MaxAge:  0,
 			}
 			http.SetCookie(w, &cookie)
-			resp := Response{
-				"code": 200,
-				"msg":  "success",
-			}
-
-			respJson, _ := json.Marshal(resp)
-
-			w.Write(respJson)
+			makeResp(w, 200, "success", nil)
+			return
 		}
 	}
 }
@@ -186,29 +158,19 @@ func getUserInfoView(w http.ResponseWriter, req *http.Request) {
 	log.Println(req.URL)
 	token, err := req.Cookie("token")
 	if err != nil {
-		log.Println("ERROR188", err)
+		log.Println("ERROR", err)
+		makeResp(w, 201, err.Error(), nil)
 	}
 	q, err := ParseToken(token.Value, secret) // 解析token
 	if err != nil {
-		log.Println("ERROR192", err)
-		resp := Response{
-			"code": 201,
-			"msg":  "login outdate",
-		}
-		respJson, _ := json.Marshal(resp)
-		w.Write(respJson)
+		// log.Println("ERROR", err)
+		makeResp(w, 201, "login outdated", nil)
 		return
 	}
 	user := new(UserFront)
-	db.Model(&User{}).First(&user, q["UserID"])
-
-	resp := Response{
-		"code": 200,
-		"data": user,
-		"msg":  "success",
+	tx := db.Model(&User{}).First(&user, q["UserID"])
+	if tx.Error != nil {
+		makeResp(w, 201, "sql error", nil)
 	}
-
-	respJson, _ := json.Marshal(resp)
-	w.Write(respJson)
-
+	makeResp(w, 200, "success", user)
 }

@@ -7,7 +7,8 @@ import (
 )
 
 type User struct {
-	ID        uint   `gorm:"primarykey;autoIncrement"`
+	ID        uint64 `gorm:"primarykey;autoIncrement"`
+	UUID      string `gorm:"unique"`
 	UserName  string `gorm:"unique"`
 	Phone     string
 	Password  string
@@ -17,8 +18,8 @@ type User struct {
 }
 
 type Message struct {
-	ID           uint `gorm:"primarykey;autoIncrement"`
-	UserID       uint
+	ID           uint64 `gorm:"primarykey;autoIncrement"`
+	UserID       uint64
 	User         User
 	Content      string
 	FontSize     float32
@@ -33,8 +34,8 @@ type Message struct {
 }
 
 type MessageFront struct {
-	ID           uint
-	UserID       uint
+	ID           uint64
+	UserID       uint64
 	User         UserFront
 	Content      string
 	FontSize     float32
@@ -49,7 +50,7 @@ type MessageFront struct {
 }
 
 type UserFront struct {
-	ID       uint
+	ID       uint64
 	UserName string
 	Phone    string
 }
