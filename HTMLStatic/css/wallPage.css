@@ -1,0 +1,332 @@
+/* * {
+    touch-action: pan-y;
+} */
+
+body {
+    overflow:hidden
+}
+
+.wall {
+    position: absolute;
+    /* top: -500;left: -500; */
+    
+    background-color: azure;
+}
+.wall:hover {
+    cursor: pointer;
+}
+
+.wall:active {
+    cursor: move;
+}
+
+
+.leftBox {
+    user-select: none;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    width: 18em;
+    height: 100%;
+    background-color: rgba(90, 219, 245, 0.9);
+    border-radius: 0em 2em 0em 0em;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    flex-direction: column;
+}
+
+.rightBox .detailText {
+    font-size: medium;
+}
+
+.rightBox {
+    overflow: auto;
+    position: fixed;
+    top: 10%;
+    left: 80%;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow:0px 0px 2px rgb(179, 174, 174);
+    /* border: 2px solid rgb(179, 174, 174); */
+    z-index: 11;
+}
+
+.min_btn:hover {
+    background-color: whitesmoke;
+}
+
+.writeBox {
+    display: flex;
+    flex-direction: column;
+    
+    /* align-items: center; */
+    /* justify-content: center; */
+    
+}
+
+.selectFontSize_input {
+    display: inline;
+    width: 20px;
+    height: 14px;
+}
+
+.editBox {
+    display: block;
+    width: 8em;
+    height: 3em;
+    max-height: 100%;
+    margin-top: 10px;
+    margin-left: 10px;
+    background-color: rgb(236, 236, 236);
+    border: 1px solid rgb(213, 212, 212);
+}
+
+.message_submit {
+    position: relative;
+    background-color: #C0FAF0;
+    border: 0px solid white;
+    border-radius: 6px;
+    display: block;
+    width: 100%;
+    height: 3em;
+    margin-top: 45px;
+    font-size: 16px;
+}
+
+.message_submit:hover {
+    background-color: #9AF3D1;
+    cursor: pointer;
+}
+
+.haraxi {
+    user-select: none;
+    overflow: hidden;
+    position: absolute;
+    /* white-space:nowrap; */
+    background-color: #EBCDA3;
+    border: 3px solid #E2CEE7;
+    transform: scale(1);
+    transform-origin: 0 0;
+    animation-name: HaraxiShowUp;
+    animation-duration: 2s;
+}
+
+.haraxi:hover {
+    cursor:zoom-in;
+    /* box-shadow:水平位置 垂直位置 模糊距离 阴影尺寸（影子大小） 阴影颜色  内/外阴影； */
+    box-shadow:0px 0px 1px black;
+}
+
+.haraxi_fake {
+    overflow: hidden;
+    user-select: none;
+    position: absolute;
+    /* white-space:nowrap; */
+    background-color: rgba(235, 205, 163, 0.5);
+    border: 3px dashed rgb(174, 0, 255);
+}
+
+.userinfo_E {
+    position: absolute;
+    /* margin-top: 15px; */
+    font-size: 1em;
+    bottom: 0;
+}
+
+.text {
+    position:relative;
+    overflow:hidden;
+    word-wrap: break-word;
+    padding-left: 5px;
+    /* text-overflow: ellipsis; */
+
+}
+
+
+.menuBtn_cover {
+    position: fixed;
+    top: 3%;
+    left: 3%;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 11;
+}
+
+.menuBtn {
+    width: 1.5em;
+    height: 1.5em;
+    background-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menuBtn:hover {
+    cursor: pointer;
+}
+
+.menuBtn line:hover {
+    background-color: #9AF3D1;
+}
+
+.menuBtn line {
+    stroke: rgb(133, 133, 133);
+    stroke-width: 2;
+}
+
+.leftBox_sign {
+    width: 12em;
+    height: 4em;
+    font-size: 1em;
+    border-radius: 1em;
+    border: 0;
+    box-shadow: -2px 2px 2px blueviolet;
+    background-color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1em;
+}
+
+.leftBox_sign:hover {
+    /* background-color: rgba(255, 255, 255, 1); */
+    box-shadow: -2px 2px 5px blueviolet;
+    cursor: pointer;
+}
+
+
+
+.leftBox .navBar {
+    margin-top: 6em;
+    /* align-items: center; */
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.mouse_menu {
+    position: absolute;
+    width: 90px;
+    border: 1px solid #000;
+    text-align: center;
+}
+
+
+.mouse_menu {
+    cursor: default;
+}
+
+.mouse_menu div:hover {
+    background-color: whitesmoke;
+}
+
+.mouse_menu .mouse_menu_item {
+    background-color: white;
+}
+
+@keyframes HaraxiShowUp {
+    from {
+        transform:scale(0);
+        background-color: azure;
+    }
+    to {
+        transform:scale(1);
+        background-color: #EBCDA3;
+    }
+}
+
+.mask {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(133, 133, 133, 0.5);
+}
+
+.signBox {
+    user-select: none;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 26em;
+    height: fit-content;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 0.5em;
+    padding-left: 3em;
+    padding-right: 3em;
+    font-size: 1em;
+}
+
+.signBox .wndInputRow {
+    font-size: 0.9em;
+    background-color: rgba(255, 255, 255, 0.6);
+    height: fit-content;
+    width: fit-content;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+.signBox .wndInputRow input {
+    border: 1px solid rgb(0, 150, 250);
+    border-radius: 0.3em;
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: 1em;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 100%;
+    height: 2em;
+}
+
+.signBox .wndInputRow input:focus {
+    outline: none;
+    border: 1px solid rgb(0, 83, 250);
+    /* border: 1px solid rgba(255, 255, 255, 0.5); */
+}
+
+.signBox .wndInputRow .validInput {
+    outline: none;
+    border: 1px solid rgb(43, 191, 43);
+}
+
+.signBox .wndInputRow .invalidInput {
+    outline: none;
+    border: 1px solid rgb(191, 43, 43);
+}
+
+.signBox .okBtn {
+    width: 100%;
+    height: 2.5em;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 0.5em;
+    border: 0px solid black;
+    border-radius: 1em;
+    font-size: 16px;
+    color: white;
+    box-shadow: 0px 0px 1px black;
+    background-color: rgba(0,150,250);
+}
+
+.signBox .okBtn:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 3px black;
+}
+
+
+.wndTitle {
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 4em;
+    padding-bottom: 1rem;
+}
+
+.imgBtn:hover {
+    cursor: pointer;
+}
