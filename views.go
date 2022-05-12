@@ -63,14 +63,35 @@ func getMessageView(w http.ResponseWriter, req *http.Request) {
 
 func addView(w http.ResponseWriter, req *http.Request) {
 	if req.Method == "POST" {
+		token, err := req.Cookie("token")
+		if err != nil {
+			log.Println("ERROR", err)
+		}
+		q, err := ParseToken(token.Value, secret) // 解析token
+		if err != nil {
+			log.Println("ERROR", err)
+		}
 		con, _ := ioutil.ReadAll(req.Body)
 		// fmt.Println(string(con))
 		hanashi := new(Message)
-		err := json.Unmarshal(con, hanashi)
+		err = json.Unmarshal(con, hanashi)
 		if err != nil {
 			panic(err)
 		}
-		hanashi.UserID = 1
+		UserID, ok := q["UserID"].(uint)
+		if !ok {
+			resp := Response{
+				"code": 200,
+				"msg":  "success",
+			}
+			respJson, err := json.Marshal(resp)
+			if err != nil {
+				log.Println(err)
+			}
+			w.Write(respJson)
+			return
+		}
+		hanashi.UserID = UserID
 		tx := db.Create(&hanashi)
 		fmt.Println(tx == nil)
 		resp := Response{
