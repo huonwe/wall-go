@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -50,14 +49,14 @@ func ParseToken(tokenString string, secret string) (map[string]interface{}, erro
 // 	fmt.Println(q, "4444444444444444")
 // }
 
-func cacheModel() {
-	for {
-		result := db.Model(&Message{}).Joins("User").Find(&messages)
-		if result.Error != nil {
-			log.Println(result.Error)
-		} else {
-			log.Println("Messages cache success")
-		}
-		time.Sleep(5 * time.Second)
-	}
-}
+// func cacheModel() {
+// 	for {
+// 		result := db.Model(&Message{}).Joins("User").Find(&messages)
+// 		if result.Error != nil {
+// 			log.Println(result.Error)
+// 		} else {
+// 			log.Println("Messages cache success")
+// 		}
+// 		time.Sleep(5 * time.Second)
+// 	}
+// }

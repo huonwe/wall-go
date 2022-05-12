@@ -78,22 +78,26 @@ func addView(w http.ResponseWriter, req *http.Request) {
 		if err != nil {
 			panic(err)
 		}
-		UserID, ok := q["UserID"].(uint)
-		if !ok {
-			resp := Response{
-				"code": 200,
-				"msg":  "success",
-			}
-			respJson, err := json.Marshal(resp)
-			if err != nil {
-				log.Println(err)
-			}
-			w.Write(respJson)
-			return
-		}
+		// UserID, ok := q["UserID"].(uint)
+		UserID := q["UserID"].(uint)
+		// if !ok {
+		// 	resp := Response{
+		// 		"code": 201,
+		// 		"msg":  "UID read failed",
+		// 	}
+		// 	respJson, err := json.Marshal(resp)
+		// 	if err != nil {
+		// 		log.Println(err)
+		// 	}
+		// 	w.Write(respJson)
+		// 	return
+		// }
 		hanashi.UserID = UserID
 		tx := db.Create(&hanashi)
-		fmt.Println(tx == nil)
+		if tx.Error != nil {
+			log.Println(err)
+			return
+		}
 		resp := Response{
 			"code": 200,
 			"msg":  "success",
@@ -182,13 +186,19 @@ func getUserInfoView(w http.ResponseWriter, req *http.Request) {
 	log.Println(req.URL)
 	token, err := req.Cookie("token")
 	if err != nil {
-		log.Println("ERROR", err)
+		log.Println("ERROR188", err)
 	}
 	q, err := ParseToken(token.Value, secret) // 解析token
 	if err != nil {
-		log.Println("ERROR", err)
+		log.Println("ERROR192", err)
+		resp := Response{
+			"code": 201,
+			"msg":  "login outdate",
+		}
+		respJson, _ := json.Marshal(resp)
+		w.Write(respJson)
+		return
 	}
-	// fmt.Println(q, "4444444444444444")
 	user := new(UserFront)
 	db.Model(&User{}).First(&user, q["UserID"])
 

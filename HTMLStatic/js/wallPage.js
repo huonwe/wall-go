@@ -146,7 +146,7 @@ function updatePreview(method){
 
 }
 
-var userInfo = JSON.parse(window.localStorage.getItem("user"));
+var userInfo;
 function showPreviewMsg(){
     let aera = document.getElementById("editBox");
     let haraxi_fake = document.getElementsByClassName("haraxi_fake");
@@ -154,6 +154,7 @@ function showPreviewMsg(){
     let temp_div_content;
     let temp_div_userinfo;
     if(haraxi_fake.length == 0){    // 初始化元素
+        userInfo = JSON.parse(window.localStorage.getItem("user"));
         temp_div = document.createElement("div");
         temp_div_content = document.createElement("div");
         temp_div_userinfo = document.createElement("div");
@@ -161,6 +162,13 @@ function showPreviewMsg(){
         temp_div.style.borderRadius = aera.style.borderRadius;
         temp_div_content.className="text";
         temp_div_userinfo.className = "userinfo_E";
+
+        // console.log(userInfo)
+        try {
+            temp_div_userinfo.innerText = "---by---" +userInfo.UserName;
+        } catch (error) {
+            temp_div_userinfo.innerText = "您还未登录哦，登陆后才可发布";
+        }
 
         temp_div.appendChild(temp_div_content);
         temp_div.appendChild(temp_div_userinfo);
@@ -189,11 +197,7 @@ function showPreviewMsg(){
     temp_div_content.style.fontSize = aera.style.fontSize;
     // temp_div_content.style.border = aera.style.border;
     temp_div.style.borderRadius = aera.style.borderRadius;
-    try {
-        temp_div_userinfo.innerText = "---by---" +userInfo.username;
-    } catch (error) {
-        temp_div_userinfo.innerText = "您还未登录哦，登陆后才可发布";
-    }
+    
 }
 
 
@@ -365,7 +369,7 @@ window.onload = function(){
             signBox.style.display = "none";
             navBox.style.display = "flex";
             window.localStorage.setItem('user',JSON.stringify(resp.data))
-            // console.log(resp.data)
+            console.log(resp.data)
         }
     }
 }
