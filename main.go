@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"gorm.io/driver/mysql"
@@ -20,13 +22,33 @@ func main() {
 	}
 	initDB(db)
 	// go cacheModel()
+	fmt.Print("server running on http://")
+	showLocalHost()
+	fmt.Print(":5500\n")
+	mux := NewHWMux()
 
-	http.Handle("/HTMLStatic/", http.StripPrefix("/HTMLStatic/", http.FileServer(http.Dir("./HTMLStatic"))))
-	http.HandleFunc("/wall", wallView)
-	http.HandleFunc("/getMessage", getMessageView)
-	http.HandleFunc("/add", addView)
-	http.HandleFunc("/signUp", signUpView)
-	http.HandleFunc("/signIn", signInView)
-	http.HandleFunc("/getUserInfo", getUserInfoView)
-	http.ListenAndServe(":5500", nil)
+	// fmt.Println(mux.middlewares)
+	mux.Handle("/HTMLStatic/", http.StripPrefix("/HTMLStatic/", http.FileServer(http.Dir("./HTMLStatic"))))
+	// mux.Handle("/favicon.ico",)
+	mux.Use(WithRecord)
+	mux.HandleFunc("/wall", wallView)
+	mux.HandleFunc("/getMessage", getMessageView)
+	mux.HandleFunc("/signIn", signInView)
+	mux.HandleFunc("/signUp", signUpView)
+
+	mux.Use(TokenVerify)
+	mux.HandleFunc("/add", addView)
+	mux.HandleFunc("/getUserInfo", getUserInfoView)
+
+	// mux.HandleFunc("/hellow", hellowView)
+
+	// mux.HandleFunc("/panic", panicView)
+	server := &http.Server{
+		Addr:         ":5500",
+		Handler:      mux,
+		ReadTimeout:  20 * time.Second,
+		WriteTimeout: 20 * time.Second,
+	}
+
+	server.ListenAndServe()
 }

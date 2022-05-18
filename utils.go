@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"net"
 	"net/http"
 	"time"
 
@@ -87,3 +88,55 @@ func makeResp(w http.ResponseWriter, code int16, msg string, data interface{}) {
 // 		time.Sleep(5 * time.Second)
 // 	}
 // }
+func showLocalHost() {
+	addrs, err := net.InterfaceAddrs()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for _, value := range addrs {
+		if ipnet, ok := value.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+			if ipnet.IP.To4() != nil {
+				fmt.Print(ipnet.IP.String())
+			}
+		}
+	}
+}
+
+func tokenReader(req *http.Request) map[string]interface{} {
+	token, _ := req.Cookie("token")
+	q, _ := ParseToken(token.Value, secret) // 解析token
+	return q
+}
+
+func RemoteIp(req *http.Request) string {
+	var remoteAddr string
+	// RemoteAddr
+	remoteAddr = req.RemoteAddr
+	if remoteAddr != "" {
+		return remoteAddr
+	}
+	// ipv4
+	remoteAddr = req.Header.Get("ipv4")
+	if remoteAddr != "" {
+		return remoteAddr
+	}
+	//
+	remoteAddr = req.Header.Get("XForwardedFor")
+	if remoteAddr != "" {
+		return remoteAddr
+	}
+	// X-Forwarded-For
+	remoteAddr = req.Header.Get("X-Forwarded-For")
+	if remoteAddr != "" {
+		return remoteAddr
+	}
+	// X-Real-Ip
+	remoteAddr = req.Header.Get("X-Real-Ip")
+	if remoteAddr != "" {
+		return remoteAddr
+	} else {
+		remoteAddr = "127.0.0.1"
+	}
+	return remoteAddr
+}

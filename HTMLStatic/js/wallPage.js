@@ -361,9 +361,9 @@ window.onload = function(){
     xhr.onreadystatechange = function(){
         if(xhr.readyState==4&&xhr.status==200){
             let resp = JSON.parse(xhr.response)
-            // console.log(resp)
+            console.log(resp)
             if(resp.code != 200){
-                alert(resp.msg);
+                if(resp.code == 201) alert(resp.msg);
                 return;
             }
             signBox.style.display = "none";

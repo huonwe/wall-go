@@ -17,8 +17,6 @@ var messages []MessageFront
 
 func wallView(w http.ResponseWriter, req *http.Request) {
 	if req.Method == "GET" {
-		path := req.URL.Path
-		log.Println(path)
 		// t, err := template.ParseFiles("./templates/wallPage.html")
 		data, err := ioutil.ReadFile("./templates/wallPage.html")
 
@@ -35,9 +33,6 @@ func wallView(w http.ResponseWriter, req *http.Request) {
 
 func getMessageView(w http.ResponseWriter, req *http.Request) {
 	if req.Method == "GET" {
-		path := req.URL.Path
-		log.Println(path)
-
 		result := db.Model(&Message{}).Joins("User").Find(&messages)
 		if result.Error != nil {
 			log.Println(result.Error)
@@ -95,7 +90,6 @@ func addView(w http.ResponseWriter, req *http.Request) {
 
 func signUpView(w http.ResponseWriter, req *http.Request) {
 	if req.Method == "POST" {
-		log.Println(req.URL)
 		con, _ := ioutil.ReadAll(req.Body)
 		user := new(User)
 		err := json.Unmarshal(con, user)
@@ -117,7 +111,6 @@ func signUpView(w http.ResponseWriter, req *http.Request) {
 
 func signInView(w http.ResponseWriter, req *http.Request) {
 	if req.Method == "POST" {
-		log.Println(req.URL)
 		con, _ := ioutil.ReadAll(req.Body)
 		user := new(User)
 		err := json.Unmarshal(con, user)
@@ -155,18 +148,7 @@ func signInView(w http.ResponseWriter, req *http.Request) {
 }
 
 func getUserInfoView(w http.ResponseWriter, req *http.Request) {
-	log.Println(req.URL)
-	token, err := req.Cookie("token")
-	if err != nil {
-		log.Println("ERROR", err)
-		makeResp(w, 201, err.Error(), nil)
-	}
-	q, err := ParseToken(token.Value, secret) // 解析token
-	if err != nil {
-		// log.Println("ERROR", err)
-		makeResp(w, 201, "login outdated", nil)
-		return
-	}
+	q := tokenReader(req)
 	user := new(UserFront)
 	tx := db.Model(&User{}).First(&user, q["UserID"])
 	if tx.Error != nil {
@@ -174,3 +156,12 @@ func getUserInfoView(w http.ResponseWriter, req *http.Request) {
 	}
 	makeResp(w, 200, "success", user)
 }
+
+// func panicView(w http.ResponseWriter, req *http.Request) {
+// 	// w.Write([]byte("closed"))
+// 	panic("999")
+// }
+
+// func hellowView(w http.ResponseWriter, req *http.Request) {
+// 	w.Write([]byte("hellow"))
+// }
