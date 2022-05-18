@@ -6,4 +6,4 @@
 
 # 使用
     go build
-    ./wallBackend
+    ./wall
