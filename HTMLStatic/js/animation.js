@@ -1,73 +1,15 @@
-function box_close_animation(elementId){
-    var detailBox = document.getElementById(elementId);
-    var count = 80;
-    var id = setInterval(frame,5);
+function wndCloseAnimation(wndID) {
+    let wnd = document.getElementById(wndID)
+    let count = 0;
+    let id = setInterval(frame,5);
     function frame() {
-        if(detailBox.style.height=="1%"){
-            detailBox.style.height = "0%"
+        if(wnd.style.height=="1%"){
+            wnd.style.height = "0%"
             clearInterval(id);
         }else{
-            count--;
-            detailBox.style.height = count+"%";
-        }
-    }
-}
-
-function box_show_animation(elementId){
-    var detailBox = document.getElementById(elementId);
-    var count = 0;
-    var id = setInterval(frame,5);
-    function frame() {
-        // console.log(detailBox.style.height)
-        if(detailBox.style.height=="80%"){
-            clearInterval(id);
-        }else{
-            count+=2;
-            detailBox.style.height = count+"%";
-        }
-    }
-}
-
-function left_box_show_animation(elementId){
-    var leftBox = document.getElementById(elementId);
-    var count = 0;
-    var rate = 10;
-    var id = setInterval(frame,5)
-    function frame(){
-        if(parseFloat(leftBox.style.left.replace("em",""))>=0){
-            clearInterval(id)
-            leftBox.style.left = "0em";
-        }else{
-            if(-18+count >=-1){
-                count+=0.5*(1/rate+0.001);
-                rate++;
-            }else{
-                count+=0.5;
-            }
-            leftBox.style.left = (-18+count)+"em";
-            // console.log(leftBox.style.left)
-        }
-    }
-}
-
-
-function left_box_close_animation(elementId){
-    var leftBox = document.getElementById(elementId);
-    var count = 0;
-    var id = setInterval(frame,5)
-    function frame(){
-        if(parseFloat(leftBox.style.left.replace("em","")) <= -18){
-            clearInterval(id)
-            leftBox.style.left = "-18em"
-        }else{
-            if(count >= 17){
-                // count+=0.01;
-                count+=0.5;    // 消失时不作差异
-            }else{
-                count+=0.5;
-            }
-            leftBox.style.left = (-count)+"em";
-            // console.log(leftBox.style.left)
+            console.log(wnd.style.height)
+            count++;
+            wnd.style.height = parseInt(wnd.style.height.replace("%",""))-count+"%";
         }
     }
 }

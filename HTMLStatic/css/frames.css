@@ -1,0 +1,71 @@
+@keyframes wndClose {
+    0%{
+        /* height: 80%; */
+    }
+    80%{
+        height: 5%;
+    }
+    100%{
+        top: 20%;
+        height: 0;
+    }
+}
+
+.wndClosing {
+    overflow: hidden;
+    animation: wndClose 1.05s;
+    /* display: none; */
+}
+
+@keyframes wndShow {
+    0%{
+        height: 0%;
+    }
+    90%{
+        height: calc(var(--wnd-height) - 5px);
+    }
+    100%{
+        height: var(--wnd-height);
+    }
+}
+
+.wndShowing {
+    overflow: hidden;
+    animation: wndShow 1.05s;
+    /* display: none; */
+}
+
+@keyframes sideBarOpen {
+    0%{
+        width: 0%;
+    }
+    90%{
+        width: calc(var(--sidebar-width) + 3px);
+    }
+    95%{
+        width: var(--sidebar-width);
+    }
+    100%{
+        width: var(--sidebar-width);
+    }
+}
+
+.sideBarOpening {
+    overflow: hidden;
+    animation: sideBarOpen 0.55s;
+}
+
+@keyframes sideBarClose {
+    0%{}
+    90%{
+        width: 0;
+    }
+    100%{
+        width: 0;
+    }
+}
+
+.sideBarClosing {
+    overflow: hidden;
+    animation: sideBarClose 0.55s;
+}

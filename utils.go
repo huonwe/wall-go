@@ -11,7 +11,7 @@ import (
 )
 
 var nowDate = time.Now().Format("2006-01-02 15")
-var secret = fmt.Sprintf("%v%v", nowDate, "dF13ayX")
+var secret = fmt.Sprintf("%v%v", nowDate, "dF13ayZ")
 
 type MapClaims map[string]interface{}
 

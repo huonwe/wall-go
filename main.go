@@ -14,7 +14,7 @@ import (
 var db *gorm.DB
 
 func main() {
-	dsn := "wallMaster:password123456@tcp(120.55.170.139:3306)/wall?charset=utf8mb4&parseTime=True"
+	dsn := "wallMaster:password123456@tcp(120.55.170.139:3306)/wall?charset=utf8mb4&parseTime=True&loc=Local"
 	var err error
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -32,6 +32,7 @@ func main() {
 	// mux.Handle("/favicon.ico",)
 	mux.Use(WithRecord)
 	mux.HandleFunc("/wall", wallView)
+	mux.Use(jsonTag)
 	mux.HandleFunc("/getMessage", getMessageView)
 	mux.HandleFunc("/signIn", signInView)
 	mux.HandleFunc("/signUp", signUpView)

@@ -9,7 +9,7 @@ body {
 .wall {
     position: absolute;
     /* top: -500;left: -500; */
-    
+    z-index: 15;
     background-color: azure;
 }
 .wall:hover {
@@ -25,6 +25,7 @@ body {
     user-select: none;
     position: absolute;
     overflow: hidden;
+    left: 0;
     top: 0;
     width: 18em;
     height: 100%;
@@ -37,22 +38,103 @@ body {
 }
 
 .rightBox .detailText {
+    width: 100%;
     font-size: medium;
 }
 
 .rightBox {
-    overflow: auto;
     position: fixed;
+    display: flex;
+    flex-direction: column;
     top: 10%;
-    left: 80%;
+    left: 76%;
+    width: 24%;
+    height: 80%;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow:0px 0px 2px rgb(179, 174, 174);
     /* border: 2px solid rgb(179, 174, 174); */
     z-index: 11;
 }
 
+.rightBox .headline {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid green;
+    height: 40px;
+}
+
+.headline .min_btn {
+    /* display: flex;
+    justify-content: center; */
+    /* background-color: whitesmoke; */
+    /* align-self: flex-start;
+    justify-self: flex-start; */
+}
+
+.headline .min_btn:hover {
+    background-color: white;
+    cursor: pointer;
+    /* display: flex;
+    justify-content: center; */
+    /* background-color: whitesmoke; */
+    /* align-self: flex-start;
+    justify-self: flex-start; */
+}
+
+.headline .title {
+    margin-left: 10%;
+    color:rgb(159, 127, 255);
+    width: 100%;
+    height: 100%;
+    /* flex: 1; */
+    /* align-self: flex-start; */
+    display: flex;
+    flex-direction: row; 
+    /* align-self: flex-end; */
+    justify-content: center;
+    align-items: center;
+    /* justify-self: center;  */
+}
+
+.rightBox .title img{
+    max-width: 95%;
+    max-height: 95%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    border: 1px solid pink;
+    /* flex: 1; */
+    /* flex-direction: row; */
+    /* align-self: flex-end; */
+    /* justify-self: flex-end; */
+}
+
+.rightBox .detailBox {
+    /* margin-top: 3em; */
+    flex: 1;
+    /* width: calc(100% - 7px); */
+    /* height: 100%; */
+    /* display: flex;
+    flex-direction: column; */
+    overflow: auto;
+}
+
+/* .rightBox #detailBox .authorInfo {
+    color: rebeccapurple;
+} */
+
+.rightBox .detailBox .detailText {
+    padding-left: 7px;
+    margin-top: 7px;
+    /* flex: 3; */
+}
+
+
 .min_btn:hover {
-    background-color: whitesmoke;
+    background-color: white;
 }
 
 .writeBox {
@@ -127,7 +209,7 @@ body {
 }
 
 .userinfo_E {
-    position: absolute;
+    position: relative;
     /* margin-top: 15px; */
     font-size: 1em;
     bottom: 0;
@@ -239,6 +321,7 @@ body {
 
 .mask {
     position: absolute;
+    display: flex;
     align-items: center;
     justify-content: center;
     top:0;

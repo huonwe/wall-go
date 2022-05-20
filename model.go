@@ -12,6 +12,7 @@ type User struct {
 	UserName  string `gorm:"unique"`
 	Phone     string
 	Password  string
+	Avatar    string
 	Messages  []Message
 	CreatedAt time.Time
 	UpdatedAt time.Time
@@ -52,7 +53,8 @@ type MessageFront struct {
 type UserFront struct {
 	ID       uint64
 	UserName string
-	Phone    string
+	Avatar   string
+	// Phone    string
 }
 
 func initDB(db *gorm.DB) {
