@@ -18,7 +18,7 @@ var messages []MessageFront
 func wallView(w http.ResponseWriter, req *http.Request) {
 	if req.Method == "GET" {
 		// t, err := template.ParseFiles("./templates/wallPage.html")
-		data, err := ioutil.ReadFile("./templates/wallPage.html")
+		data, err := ioutil.ReadFile("./HTMLStatic/html/wallPage.html")
 
 		if err == nil {
 			w.Write(data)
@@ -165,3 +165,13 @@ func getUserInfoView(w http.ResponseWriter, req *http.Request) {
 // func hellowView(w http.ResponseWriter, req *http.Request) {
 // 	w.Write([]byte("hellow"))
 // }
+
+func userView(w http.ResponseWriter, req *http.Request) {
+	data, err := ioutil.ReadFile("./HTMLStatic/html/user.html")
+	if err != nil {
+		makeResp(w, 201, "read failed", nil)
+		return
+	}
+	w.Write(data)
+
+}

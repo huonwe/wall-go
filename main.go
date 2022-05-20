@@ -32,13 +32,14 @@ func main() {
 	// mux.Handle("/favicon.ico",)
 	mux.Use(WithRecord)
 	mux.HandleFunc("/wall", wallView)
-	mux.Use(jsonTag)
+	// mux.Use(jsonTag)
 	mux.HandleFunc("/getMessage", getMessageView)
 	mux.HandleFunc("/signIn", signInView)
 	mux.HandleFunc("/signUp", signUpView)
 
 	mux.Use(TokenVerify)
 	mux.HandleFunc("/add", addView)
+	mux.HandleFunc("/user", userView)
 	mux.HandleFunc("/getUserInfo", getUserInfoView)
 
 	// mux.HandleFunc("/hellow", hellowView)
