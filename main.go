@@ -29,6 +29,7 @@ func main() {
 
 	// fmt.Println(mux.middlewares)
 	mux.Handle("/HTMLStatic/", http.StripPrefix("/HTMLStatic/", http.FileServer(http.Dir("./HTMLStatic"))))
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 	// mux.Handle("/favicon.ico",)
 	mux.Use(WithRecord)
 	mux.HandleFunc("/", indexView)
@@ -40,7 +41,7 @@ func main() {
 
 	mux.Use(TokenVerify)
 	mux.HandleFunc("/add", addView)
-	mux.HandleFunc("/user", userView)
+	mux.HandleFunc("/user/", userView)
 	mux.HandleFunc("/getUserInfo", getUserInfoView)
 	mux.HandleFunc("/wall/like", likeInterface)
 	mux.HandleFunc("/wall/unlike", unlikeInterface)

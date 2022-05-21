@@ -351,7 +351,7 @@ function hanashiPlacement(data) {
     if (data.User.Avatar != "") {
         avatar.src = data.User.Avatar;
     } else {
-        avatar.src = "https://s3.bmp.ovh/imgs/2022/04/23/a360df3d8e910e8c.png";
+        avatar.src = "/static/default/avatar.jpg";
     }
 
     let username = document.createElement("span");
