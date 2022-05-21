@@ -7,8 +7,8 @@ import (
 )
 
 type User struct {
-	ID            uint64 `gorm:"primarykey;autoIncrement"`
-	UUID          string `gorm:"unique"`
+	ID uint64 `gorm:"primarykey;autoIncrement"`
+	// UUID          string `gorm:"unique"`
 	Administrator bool
 	UserName      string `gorm:"unique"`
 	Phone         string
