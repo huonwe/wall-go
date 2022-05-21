@@ -93,18 +93,18 @@ type Storage struct {
 }
 
 func initDB(db *gorm.DB) {
-	db.Exec("DROP TABLE storages")
-	db.Exec("DROP TABLE thumb_combs")
-	db.Exec("DROP TABLE messages")
-	db.Exec("DROP TABLE users")
+	// db.Exec("DROP TABLE storages")
+	// db.Exec("DROP TABLE thumb_combs")
+	// db.Exec("DROP TABLE messages")
+	// db.Exec("DROP TABLE users")
 
 	db.AutoMigrate(&User{})
 	db.AutoMigrate(&Message{})
 	db.AutoMigrate(&ThumbComb{})
 	db.AutoMigrate(&Storage{})
 
-	user := User{UserName: "admin", Phone: "19813452541", Password: "password123", Administrator: true}
-	db.Create(&user)
+	// user := User{UserName: "admin", Phone: "19813452541", Password: "password123", Administrator: true}
+	// db.Create(&user)
 
 	// user = User{UserName: "gggggg", Phone: "19813452541", Password: "1234567"}
 

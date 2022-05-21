@@ -161,11 +161,12 @@ func storeQueryInterface(w http.ResponseWriter, req *http.Request) {
 }
 
 func storeUpdateInterface(w http.ResponseWriter, req *http.Request) {
-	q := tokenReader(req)
-	UserID := UIDReader(q)
+	// q := tokenReader(req)
 	data := postReader(req)
+	// UserID := UIDReader(data)
+	// ownerID, _ := strconv.Atoi(data["UserID"])
 
-	d := Storage{UserID: UserID, Key: data["Key"]}
+	d := Storage{Key: data["Key"]}
 
 	exist := new(Storage)
 	db.Where(&d).Find(&exist)
