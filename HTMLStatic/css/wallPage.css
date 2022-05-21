@@ -287,7 +287,7 @@ body {
 }
 
 .navBar .now {
-    font-size: large;
+    font-weight: bolder;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -295,10 +295,12 @@ body {
 }
 
 .navBar .entrance {
-    background-color: #0095ff84;
+    color: gray;
+    font-weight: bold;
+    background-color: #e2ebf19e;
     margin-top: 5px;
     width: calc(100%-20px);
-    height: 35px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: flex-start;

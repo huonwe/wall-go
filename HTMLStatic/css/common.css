@@ -63,7 +63,7 @@
 .wnd {
     display: flex;
     flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #e2ebf19e;
     box-shadow: 0px 0px 2px rgb(179, 174, 174);
 
     height: var(--wnd-height);
@@ -167,7 +167,7 @@
 }
 
 .wnd .btnGroup button {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.1);
     width: fit-content;
     max-width: 64px;
     max-height: 95%;
@@ -331,7 +331,7 @@
     /* border: 1px solid black; */
     overflow: auto;
 
-    background-color: rgba(90, 219, 245, 1);
+    background-color: rgb(90, 219, 245);
     border-radius: 0em 2em 0em 0em;
 
     /* background-color: rgba(255, 255, 255, 1); */
