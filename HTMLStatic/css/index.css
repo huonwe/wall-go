@@ -1,0 +1,21 @@
+body {
+    height: 100vh;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    width: fit-content;
+    height: fit-content;
+    border-bottom: 1px solid gray;
+    border-radius: 3px;
+}

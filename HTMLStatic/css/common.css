@@ -36,6 +36,8 @@
     /* margin-right: 0; */
     /* justify-self: flex-end; */
     /* float: right; */
+
+    /* 使其最右端 */
     margin-left: auto;
 }
 
@@ -124,6 +126,7 @@
     padding-right: 10px;
 }
 
+
 /* .likeBtn *:hover {
     background-color: rgba(245, 235, 225, 0.4);
 } */
@@ -169,6 +172,10 @@
     max-width: 64px;
     max-height: 95%;
     border: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .wnd .btnGroup button:hover {
@@ -176,6 +183,45 @@
     background-color: rgba(245, 235, 225, 0.4);
     /* border-radius: 50%; */
 }
+
+.like_ {
+    width: 32px;
+    max-height: 32px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-image: url(/HTMLStatic/css/smiley.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+
+.like_::after {
+    color: black;
+    content: "赞";
+    font-weight: bolder;
+    padding-left: 24px;
+}
+
+.liked_ {
+    /* max-width: 32px; */
+    width: 32px;
+    max-height: 32px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-image: url(/HTMLStatic/css/OK.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.liked_::after {
+    color: rgb(50, 150, 250);
+    content: "赞";
+    font-weight: bolder;
+    padding-left: 24px;
+    /* text-align: center; */
+    /* padding-top: 32px; */
+}
+
 
 .like {
     color: black;
@@ -274,6 +320,7 @@
 }
 
 .sideBar {
+    white-space: nowrap;
     user-select: none;
     display: flex;
     flex-direction: column;
@@ -335,4 +382,48 @@
     width: 32px;
     height: 32px;
     background-image: url(/HTMLStatic/css/close.svg);
+}
+
+
+.tips {
+    z-index: 99;
+    position: fixed;
+    width: 10%;
+    height: fit-content;
+    top: 10%;
+    left: 45%;
+    animation-name: tipsShowing;
+    animation-duration: 1s;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.thumbCount {
+    /* height: 95%; */
+    /* width: 16px; */
+    max-width: 32px;
+    margin-left: auto;
+    color: rgb(255, 127, 127);
+}
+
+.thumbCount::after {
+    content: "👍";
+    /* width: 16px; */
+    /* width: 32px;
+    height: 32px;
+    z-index: 99;
+    max-height: 32px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-image: url(/HTMLStatic/css/smiley.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: black; */
 }

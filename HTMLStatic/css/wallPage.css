@@ -181,8 +181,8 @@ body {
     overflow: hidden;
     position: absolute;
     /* white-space:nowrap; */
-    background-color: #EBCDA3;
-    border: 3px solid #E2CEE7;
+    background-color: rgba(190, 255, 192, 0.7);
+    border: 3px solid #ffffff;
     transform: scale(1);
     transform-origin: 0 0;
     animation-name: HaraxiShowUp;
@@ -338,7 +338,7 @@ body {
     }
     to {
         transform:scale(1);
-        background-color: #EBCDA3;
+        background-color: rgba(190, 255, 192, 0.7);
     }
 }
 

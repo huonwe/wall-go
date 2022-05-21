@@ -15,6 +15,18 @@ import (
 // }
 var messages []MessageFront
 
+func indexView(w http.ResponseWriter, req *http.Request) {
+	data, err := ioutil.ReadFile("./HTMLStatic/html/index.html")
+	if err == nil {
+		w.Write(data)
+		// t.Execute(w, "")
+	} else {
+		log.Println(err)
+		w.WriteHeader(404)
+		w.Write([]byte("404 - " + http.StatusText(404)))
+	}
+}
+
 func wallView(w http.ResponseWriter, req *http.Request) {
 	if req.Method == "GET" {
 		// t, err := template.ParseFiles("./templates/wallPage.html")

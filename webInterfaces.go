@@ -2,9 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+
+	"gorm.io/gorm"
 )
 
 func likeInterface(w http.ResponseWriter, req *http.Request) {
@@ -39,9 +42,13 @@ func likeInterface(w http.ResponseWriter, req *http.Request) {
 	// message := new(Message)
 	// db.First(&message, hanashi.ID)
 	// message.Thumbs += 1
-	db.Model(&Message{}).Where("id = ?", hanashi.ID).Update("thumbs", "thumbs + 1")
+	db.Model(&Message{}).Where("id = ?", hanashi.ID).Update("thumbs", gorm.Expr("thumbs + 1"))
 
-	makeResp(w, 200, "success", nil)
+	r := &Message{}
+	db.First(&r, hanashi.ID)
+	fmt.Println(r.Thumbs)
+
+	makeResp(w, 200, "liked", nil)
 
 }
 
@@ -66,7 +73,9 @@ func unlikeInterface(w http.ResponseWriter, req *http.Request) {
 		makeResp(w, 201, "sql error", nil)
 		return
 	}
-	makeResp(w, 200, "success", nil)
+	db.Model(&Message{}).Where("id = ?", hanashi.ID).Update("thumbs", gorm.Expr("thumbs - 1"))
+
+	makeResp(w, 200, "like", nil)
 
 }
 

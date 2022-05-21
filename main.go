@@ -31,6 +31,7 @@ func main() {
 	mux.Handle("/HTMLStatic/", http.StripPrefix("/HTMLStatic/", http.FileServer(http.Dir("./HTMLStatic"))))
 	// mux.Handle("/favicon.ico",)
 	mux.Use(WithRecord)
+	mux.HandleFunc("/", indexView)
 	mux.HandleFunc("/wall", wallView)
 	// mux.Use(jsonTag)
 	mux.HandleFunc("/getMessage", getMessageView)
@@ -51,8 +52,8 @@ func main() {
 	server := &http.Server{
 		Addr:         ":5500",
 		Handler:      mux,
-		ReadTimeout:  20 * time.Second,
-		WriteTimeout: 20 * time.Second,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
 	}
 
 	server.ListenAndServe()

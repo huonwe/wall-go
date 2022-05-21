@@ -69,3 +69,13 @@
     overflow: hidden;
     animation: sideBarClose 0.55s;
 }
+
+
+@keyframes tipsShowing {
+    0%{
+        top:0%
+    }
+    100%{
+        top:10%
+    }
+}

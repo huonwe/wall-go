@@ -26,65 +26,71 @@ function input_Validate(e){
             }
             break;
     }
-    
-
-    
 }
 
+function likeToggle_(){
+    let count = rightContainer.getElementsByClassName("thumbCount")[0]
+    console.log(count)
+    let like_ = rightContainer.getElementsByClassName("like_")
+    // console.log(likeStyle)
+    if(like_.length == 1){
+        like_[0].className = "liked_"
+        count.innerText = parseInt(count.innerText) + 1
+    }else{
+        rightContainer.getElementsByClassName("liked_")[0].className = "like_"
+        count.innerText = parseInt(count.innerText) - 1
+        // likeStyle.className = "like_"
+    }
+}
 
 function likeToggle(that){
     // console.log(that.parentElement.parentElement)
-    
+    // console.log(rightContainer)
+    rightContainer.getElementsByClassName("likeBtn")[0].setAttribute("disable",true)
     let hanashiID = rightContainer.getElementsByClassName("titleName")[0].id
     let xhr = new XMLHttpRequest()
     let data = {
         "ID":parseInt(hanashiID)
     }
-    // console.log("SSS")
-    let like = that.getElementsByClassName("like")
-    // console.log(like.length)
-
-    if(like.length == 1){   // not clicked -> clicked
-        // console.log(that.getElementsByClassName("smiley")[0].className)
-        document.getElementsByName("likeCombine_ico")[0].className = "ok"
-        // console.log(that)
-        like[0].className = "liked"
+    // let likeStyle = document.getElementsByName("likeStyle")[0]
+    likeToggle_()
+    let like_ = rightContainer.getElementsByClassName("like_")
+    if(like_.length == 0){   // not clicked -> clicked
         xhr.open("POST","/wall/like",true)
-        xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8")
-        xhr.send(JSON.stringify(data))
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                let resp = JSON.parse(xhr.response)
-                if (resp.code != 200) {
-                    if(resp.code == 201) alert(resp.msg);
-                    return;
-                }                
-            }else if(xhr.readyState == 4 && xhr.status != 200){
-                alert("无法连接到服务器")
-                return
-            }
-        }
     }else { // clicked -> not clicked
-        // console.log(that)
-        document.getElementsByName("likeCombine_ico")[0].className = "smiley"
-        let liked = that.getElementsByClassName("liked")
-        liked[0].className = "like"
         xhr.open("POST","/wall/unlike",true)
-        xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8")
+    }
+    xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8")
+    try{
         xhr.send(JSON.stringify(data))
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                let resp = JSON.parse(xhr.response)
-                if (resp.code != 200) {
-                    if(resp.code == 201) alert(resp.msg);
-                    return;
-                }
-                
-            }else if(xhr.readyState == 4 && xhr.status != 200){
-                alert("无法连接到服务器")
-                return
-            }
+    }catch(e){
+        // showTips("无法连接至服务器")
+        likeToggle_()
+    }
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            let resp = JSON.parse(xhr.response)
+            if (resp.code != 200) {
+                likeToggle_()
+                rightContainer.getElementsByClassName("likeBtn")[0].setAttribute("disable",false)
+                return;
+            }                
+        }else if(xhr.readyState == 4 && xhr.status != 200){
+            likeToggle_()
+            rightContainer.getElementsByClassName("likeBtn")[0].setAttribute("disable",false)
+            return
         }
     }
-    
+    xhr.addEventListener("readystatechange",commonXHRHandler)
+}
+
+function showTips(msg){
+    let box = document.createElement("div")
+    box.className="tips"
+    box.innerText = msg
+    box.id = "tips"
+    document.body.appendChild(box)
+    setTimeout(function(){
+        document.getElementById("tips").remove()
+    },2000)
 }

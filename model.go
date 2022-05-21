@@ -41,8 +41,8 @@ type Message struct {
 
 	Remark   string
 	Thumbs   uint64
-	Comments []Comment
 	Thumbed  bool
+	Comments []Comment
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
@@ -67,8 +67,12 @@ type MessageFront struct {
 	Height       float32
 	BorderRadius float32
 	Remark       string
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
+
+	Thumbs  uint64
+	Thumbed bool
+
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 type UserFront struct {

@@ -1,147 +1,275 @@
 <!DOCTYPE html>
 <html lang="zh">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/HTMLStatic/js/animation.js"></script>
     <script src="/HTMLStatic/js/behavior.js"></script>
     <script src="/HTMLStatic/js/wallPage.js"></script>
-    <link rel="stylesheet" type="text/css" href="/HTMLStatic/css/wallPage.css">
-    <link rel="stylesheet" type="text/css" href="/HTMLStatic/css/common.css">
-    <link rel="stylesheet" type="text/css" href="/HTMLStatic/css/frames.css">
+    <script src="/HTMLStatic/js/utils.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/HTMLStatic/css/wallPage.css"
+    />
+    <link rel="stylesheet" type="text/css" href="/HTMLStatic/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="/HTMLStatic/css/frames.css" />
     <!-- <link rel="shortcut icon" type="image/x-icon" href="/HTMLStatic/favicon.ico" /> -->
-
     <title>网页随心贴</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <span class="operator">
-        <div id="menBtn_open" onclick="sideBarToggle('leftContainer','open',this)" class="menuSvg"
-            style="transform-origin:50% 50%;transform:rotate(0deg);position: fixed;top: 0px;height: 0px;z-index: 16;width: 32px;height: 32px;">
-        </div>
+      <div
+        id="menBtn_open"
+        onclick="sideBarToggle('leftContainer','open',this)"
+        class="menuSvg"
+        style="
+          transform-origin: 50% 50%;
+          transform: rotate(0deg);
+          position: fixed;
+          top: 0px;
+          height: 0px;
+          z-index: 16;
+          width: 32px;
+          height: 32px;
+        "
+      ></div>
     </span>
     <div id="wall" class="wall">
-        <div id="mouse_menu" class="mouse_menu">
-            <div id="write_message" class="mouse_menu_item" onclick="showWrite()">
-                <img src="http://www.icosky.com/icon/ico/System/Scrap/Pen.ico" style="width: 12px; display: inline;">
-                <div style="display: inline;">在此留言</div>
-            </div>
+      <div id="mouse_menu" class="mouse_menu">
+        <div id="write_message" class="mouse_menu_item" onclick="showWrite()">
+          <img
+            src="http://www.icosky.com/icon/ico/System/Scrap/Pen.ico"
+            style="width: 12px; display: inline"
+          />
+          <div style="display: inline">在此留言</div>
         </div>
+      </div>
     </div>
     <div class="container">
-        <div id="leftContainer" class="userView sideBar flexLeft">
-            <div class="title">
-                <span class="operator">
-                    <div onclick="sideBarToggle('leftContainer','close',this)" id="menuBtn" class="menuSvg"
-                        style="transform-origin:50% 50%;transform:rotate(0deg);"></div>
-                </span>
-                <span class="titleName">网页随心贴</span>
-            </div>
-            <div class="body">
-                <div id="signBox" class="signBtn" style="display:flex;">
-                    <button id="leftBox_login" class="leftBox_sign" onclick="showLoginWnd()">登录</button>
-                    <button id="leftBox_signup" class="leftBox_sign" onclick="showRegWnd()">注册</button>
-                </div>
-                <div id="navBox" class="navBar" style="display: none;">
-                    <div class="now">当前区:公共区</div>
-                    <div class="entrance">首页</div>
-                    <br>
-                    <div class="entrance" onclick="location.href='/user'">个人中心</div>
-                    
-                </div>
-            </div>
+      <div id="leftContainer" class="userView sideBar flexLeft">
+        <div class="title">
+          <span class="operator">
+            <div
+              onclick="sideBarToggle('leftContainer','close',this)"
+              id="menuBtn"
+              class="menuSvg"
+              style="transform-origin: 50% 50%; transform: rotate(0deg)"
+            ></div>
+          </span>
+          <span class="titleName">网页随心贴</span>
         </div>
+        <div class="body">
+          <div id="signBox" class="signBtn" style="display: flex">
+            <button
+              id="leftBox_login"
+              class="leftBox_sign"
+              onclick="showLoginWnd()"
+            >
+              登录
+            </button>
+            <button
+              id="leftBox_signup"
+              class="leftBox_sign"
+              onclick="showRegWnd()"
+            >
+              注册
+            </button>
+          </div>
+          <div id="navBox" class="navBar" style="display: none">
+            <div class="now">当前区:公共区</div>
+            <div class="entrance" onclick="location.href='/'">首页</div>
+            <br />
+            <div class="entrance" onclick="location.href='/user'">个人中心</div>
+          </div>
+        </div>
+      </div>
 
-        <div id="rightContainer" class="userView wnd flexRight" style="display: none;">
-            <div class="title">
-                <span class="operator">
-                    <div onclick="wndClose('rightContainer')" class="closeSvg"></div>
-                </span>
-                <span class="titleName"></span>
-            </div>
-            <div class="btnGroup">
-                <button onclick="likeToggle(this)" class="flexRow likeBtn">
-                    <div name="likeCombine_ico" class="smiley"></div>
-                    <div name="likeCombine_word" class="like"></div>
-                </button>
-            </div>
-            <div class="body">
-            </div>
+      <div
+        id="rightContainer"
+        class="userView wnd flexRight"
+        style="display: none"
+      >
+        <div class="title">
+          <span class="operator">
+            <div onclick="wndClose('rightContainer')" class="closeSvg"></div>
+          </span>
+          <span class="titleName"></span>
         </div>
+        <div class="btnGroup">
+          <!-- <button onclick="likeToggle(this)" class="likeBtn">
+                    <div name="likeStyle" class="like_"></div>
+                </button> -->
+        </div>
+        <div class="body"></div>
+      </div>
     </div>
 
-    <div id="mask" class="mask userView" style="display: none;">
-        <div id="loginBox" class="signBox" style="display: none;z-index: 13;">
-            <div class="wndTitle">登录</div>
-            <div class="wndInputRow"><input id="login_username" type="text" placeholder="用户名"
-                    onclick="this.style.outline='none'" onchange="input_Validate(this)" maxlength="16"></div>
-            <div class="wndInputRow"><input id="login_password" type="password" placeholder="密码"
-                    onclick="this.style.outline='none'" onchange="input_Validate(this)" maxlength="20"></div>
-            <div class="wndInputRow">
-                <button id="loginBtn" class="okBtn" onclick="signIn()">确认</button>
-            </div>
+    <div id="mask" class="mask userView" style="display: none">
+      <div id="loginBox" class="signBox" style="display: none; z-index: 13">
+        <div class="wndTitle">登录</div>
+        <div class="wndInputRow">
+          <input
+            id="login_username"
+            type="text"
+            placeholder="用户名"
+            onclick="this.style.outline='none'"
+            onchange="input_Validate(this)"
+            maxlength="16"
+          />
         </div>
-        <div id="regBox" class="signBox" style="display: none;z-index: 13;">
-            <div class="wndTitle">注册</div>
-            <div class="wndInputRow"><input id="reg_username" type="text" placeholder="用户名"
-                    onclick="this.style.outline='none'" onchange="input_Validate(this)" maxlength="16" /></div>
-            <div class="wndInputRow"><input id="reg_password" type="password" placeholder="密码"
-                    onclick="this.style.outline='none'" onchange="input_Validate(this)" maxlength="20" /></div>
-            <div class="wndInputRow"><input id="reg_password_sec" type="password" placeholder="请再输一次密码"
-                    onclick="this.style.outline='none'" onchange="input_Validate(this)" maxlength="20" /></div>
-            <div class="wndInputRow"><input id="reg_phone" type="tel" placeholder="手机号"
-                    onclick="this.style.outline='none'" onchange="input_Validate(this)" maxlength="11" /></div>
-            <div class="wndInputRow"><input id="reg_agreeProt" type="checkbox" style="width: 1em;height:1em;"
-                    onclick="this.style.outline='none'" />&nbsp;我已知晓该网站的<a href="/HTMLStatic/html/illustration.html"
-                    style="margin-left: 0.5em;">使用条例</a></div>
-            <div class="wndInputRow">
-                <button id="regBtn" class="okBtn" onclick="signUp()">确认</button>
-            </div>
+        <div class="wndInputRow">
+          <input
+            id="login_password"
+            type="password"
+            placeholder="密码"
+            onclick="this.style.outline='none'"
+            onchange="input_Validate(this)"
+            maxlength="20"
+          />
         </div>
-        <div class="imgBtn" style="position: absolute;font-size:30px;top: 5%;left: 95%;" onclick="closeSignWnd()">×
+        <div class="wndInputRow">
+          <button id="loginBtn" class="okBtn" onclick="signIn()">确认</button>
         </div>
+      </div>
+      <div id="regBox" class="signBox" style="display: none; z-index: 13">
+        <div class="wndTitle">注册</div>
+        <div class="wndInputRow">
+          <input
+            id="reg_username"
+            type="text"
+            placeholder="用户名"
+            onclick="this.style.outline='none'"
+            onchange="input_Validate(this)"
+            maxlength="16"
+          />
+        </div>
+        <div class="wndInputRow">
+          <input
+            id="reg_password"
+            type="password"
+            placeholder="密码"
+            onclick="this.style.outline='none'"
+            onchange="input_Validate(this)"
+            maxlength="20"
+          />
+        </div>
+        <div class="wndInputRow">
+          <input
+            id="reg_password_sec"
+            type="password"
+            placeholder="请再输一次密码"
+            onclick="this.style.outline='none'"
+            onchange="input_Validate(this)"
+            maxlength="20"
+          />
+        </div>
+        <div class="wndInputRow">
+          <input
+            id="reg_phone"
+            type="tel"
+            placeholder="手机号"
+            onclick="this.style.outline='none'"
+            onchange="input_Validate(this)"
+            maxlength="11"
+          />
+        </div>
+        <div class="wndInputRow">
+          <input
+            id="reg_agreeProt"
+            type="checkbox"
+            style="width: 1em; height: 1em"
+            onclick="this.style.outline='none'"
+          />&nbsp;我已知晓该网站的<a
+            href="/HTMLStatic/html/illustration.html"
+            style="margin-left: 0.5em"
+            >使用条例</a
+          >
+        </div>
+        <div class="wndInputRow">
+          <button id="regBtn" class="okBtn" onclick="signUp()">确认</button>
+        </div>
+      </div>
+      <div
+        class="imgBtn"
+        style="position: absolute; font-size: 30px; top: 5%; left: 95%"
+        onclick="closeSignWnd()"
+      >
+        ×
+      </div>
     </div>
 
-    <div name="_writeBox" style="display: none;">
-        <div class="writeBox" style="display: flex;height: 400px;">
-            <div style="height: 200px;">
-                <div>
-                    &ensp;<span>字体大小:<input id="selectFontSize_input" class="selectFontSize_input" type="text"
-                            onkeyup="this.value=this.value.replace(/[^\d]/g,'') "
-                            onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " value="18" /> px</span>
-                    &ensp;<span>弧度大小:<input id="selectRadiusSize_input" class="selectFontSize_input" type="text"
-                            onkeyup="this.value=this.value.replace(/[^\d]/g,'') "
-                            onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " value="10" /> px</span>
-                </div>
-                <textarea id="editBox" class="editBox" onmousemove="updatePreview()" oninput="editUpdate(this)"
-                    style="height: 40px;width: 90px;font-size: 18px; border-radius: 10px;"
-                    placeholder="支持emoji表情哦。最大字符数：600" maxlength="600"></textarea>
-                <button class="message_submit" style="border-radius: 10px;" onclick="submitMsg(this)">提交</button>
-            </div>
+    <div name="_writeBox" style="display: none">
+      <div class="writeBox" style="display: flex; height: 400px">
+        <div style="height: 200px">
+          <div>
+            &ensp;<span
+              >字体大小:<input
+                id="selectFontSize_input"
+                class="selectFontSize_input"
+                type="text"
+                onkeyup="this.value=this.value.replace(/[^\d]/g,'')"
+                onafterpaste="this.value=this.value.replace(/[^\d]/g,'')"
+                value="18"
+              />
+              px</span
+            >
+            &ensp;<span
+              >弧度大小:<input
+                id="selectRadiusSize_input"
+                class="selectFontSize_input"
+                type="text"
+                onkeyup="this.value=this.value.replace(/[^\d]/g,'')"
+                onafterpaste="this.value=this.value.replace(/[^\d]/g,'')"
+                value="10"
+              />
+              px</span
+            >
+          </div>
+          <textarea
+            id="editBox"
+            class="editBox"
+            onmousemove="updatePreview()"
+            oninput="editUpdate(this)"
+            style="
+              height: 40px;
+              width: 90px;
+              font-size: 18px;
+              border-radius: 10px;
+            "
+            placeholder="支持emoji表情哦。最大字符数：600"
+            maxlength="600"
+          ></textarea>
+          <button
+            class="message_submit"
+            style="border-radius: 10px"
+            onclick="submitMsg(this)"
+          >
+            提交
+          </button>
         </div>
+      </div>
     </div>
-
-</body>
-<script>
+  </body>
+  <script>
     var mask = document.getElementById("mask");
     // var overMask = document.getElementById("overMask");
     var loginBox = document.getElementById("loginBox");
     var regBox = document.getElementById("regBox");
     var signBox = document.getElementById("signBox");
     var navBox = document.getElementById("navBox");
-    var scal = 1;   // 缩放因子
+    var scal = 1; // 缩放因子
     var wall = document.getElementById("wall");
     var menuBtn = document.getElementById("menuBtn");
-    var rightContainer = document.getElementById("rightContainer")
+    var rightContainer = document.getElementById("rightContainer");
     wall.style.width = WALL_WIDTH + "px";
-    wall.style.height = WALL_HEIGHT + "px"
+    wall.style.height = WALL_HEIGHT + "px";
 
     wall.style.left = -(WALL_WIDTH - SCREEN_WIDTH) / 2 + "px";
     wall.style.top = -(WALL_HEIGHT - SCREEN_HEIGHT) / 2 + "px";
     getMessage();
-
 
     // 记录鼠标右击时的位置
     // 相对于中心点的坐标
@@ -152,44 +280,46 @@
     var ul = document.getElementById("mouse_menu");
     ul.style.display = "none";
     wall.oncontextmenu = function (e) {
-        let _event = window.event || e;
+      let _event = window.event || e;
 
-        center_rel_point_x = (_event.layerX - WALL_WIDTH / 2) / scal
-        center_rel_point_y = (_event.layerY - WALL_HEIGHT / 2) / scal
+      center_rel_point_x = (_event.layerX - WALL_WIDTH / 2) / scal;
+      center_rel_point_y = (_event.layerY - WALL_HEIGHT / 2) / scal;
 
-        ul.style.display = "block";
-        ul.style.left = WALL_WIDTH / 2 + center_rel_point_x + 5 + "px";
-        ul.style.top = WALL_HEIGHT / 2 + center_rel_point_y + 5 + "px";
-        // 阻止默认行为
-        if (_event.preventDefault) {
-            _event.preventDefault()
-        } else {
-            _event.returnValue = false;
-        }
-        wall.onclick = function () {
-            ul.style.display = "none";
-            updatePreview("close");
-        }
-    }
+      ul.style.display = "block";
+      ul.style.left = WALL_WIDTH / 2 + center_rel_point_x + 5 + "px";
+      ul.style.top = WALL_HEIGHT / 2 + center_rel_point_y + 5 + "px";
+      // 阻止默认行为
+      if (_event.preventDefault) {
+        _event.preventDefault();
+      } else {
+        _event.returnValue = false;
+      }
+      wall.onclick = function () {
+        ul.style.display = "none";
+        updatePreview("off");
+      };
+    };
 
     // 复写左键行为
     var mousedown = false;
     wall.onmousedown = function () {
-        mousedown = true;
-    }
+      mousedown = true;
+    };
     wall.onmouseup = function () {
-        mousedown = false;
-    }
+      mousedown = false;
+    };
     wall.onmousemove = function (e) {
-        if (mousedown) {
-            // console.log(wall.offsetLeft)
-            var wall_left = parseInt(wall.style.left.replace("px", ""));
-            var wall_top = parseInt(wall.style.top.replace("px", ""));
+      if (mousedown) {
+        // console.log(wall.offsetLeft)
+        var wall_left = parseInt(wall.style.left.replace("px", ""));
+        var wall_top = parseInt(wall.style.top.replace("px", ""));
 
-            wall.style.left = parseInt(wall.style.left.replace("px", "")) + e.movementX + "px"
-            wall.style.top = parseInt(wall.style.top.replace("px", "")) + e.movementY + "px"
-        }
-    }
+        wall.style.left =
+          parseInt(wall.style.left.replace("px", "")) + e.movementX + "px";
+        wall.style.top =
+          parseInt(wall.style.top.replace("px", "")) + e.movementY + "px";
+      }
+    };
     // 添加元素响应
     let rightBox = document.getElementById("rightBox");
     // let min_btn_rightBox = document.getElementById("min_btn_rightBox");
@@ -198,101 +328,104 @@
 
     let editBox = document.getElementById("editBox");
     function editUpdate(that) {
-        let value = that.value.replace(/\n/g, '__!').replace(/\r/g, '__?');
-        let html = value.replace(/__!/g, '\n').replace(/__?/g, "\s");
-        that.innerText = html;
-        updatePreview();
+      let value = that.value.replace(/\n/g, "__!").replace(/\r/g, "__?");
+      let html = value.replace(/__!/g, "\n").replace(/__?/g, "\s");
+      that.innerText = html;
+      updatePreview();
     }
 
     // input style change
     let selectFontSize_input = document.getElementById("selectFontSize_input");
-    let selectRadiusSize_input = document.getElementById("selectRadiusSize_input");
+    let selectRadiusSize_input = document.getElementById(
+      "selectRadiusSize_input"
+    );
     selectFontSize_input.onchange = function () {
-        editBox.style.fontSize = selectFontSize_input.value + "px";
-    }
+      editBox.style.fontSize = selectFontSize_input.value + "px";
+    };
     selectRadiusSize_input.onchange = function () {
-
-        editBox.style.borderRadius = selectRadiusSize_input.value + "px";
-    }
-
+      editBox.style.borderRadius = selectRadiusSize_input.value + "px";
+    };
 
     // 复写鼠标滚轮行为
     var wheelscale = function (ev) {
-        var down = true; // 定义一个标志，当滚轮向下滚时，执行一些操作
-        down = ev.wheelDelta ? ev.wheelDelta < 0 : ev.detail > 0;
-        if (!down) {
-            // console.log('鼠标滚轮向上放大---------')
-            scal = (parseFloat(scal) + 0.01).toFixed(2);
-            // console.log("放大系数: " + scal)
-            wall.style.transform = "scale(" + scal + ")";    //scale()在这里要使用拼接的方式才能生效
-            // wall.style.transformOrigin = '0 0';
-            wall.style.transformOrigin = "50% 50%";
-
+      var down = true; // 定义一个标志，当滚轮向下滚时，执行一些操作
+      down = ev.wheelDelta ? ev.wheelDelta < 0 : ev.detail > 0;
+      if (!down) {
+        // console.log('鼠标滚轮向上放大---------')
+        scal = (parseFloat(scal) + 0.01).toFixed(2);
+        // console.log("放大系数: " + scal)
+        wall.style.transform = "scale(" + scal + ")"; //scale()在这里要使用拼接的方式才能生效
+        // wall.style.transformOrigin = '0 0';
+        wall.style.transformOrigin = "50% 50%";
+      } else {
+        // console.log('鼠标滚轮向下缩小++++++++++')
+        if (scal == maxScal) {
+          scal = maxScal;
+          return;
         } else {
-            // console.log('鼠标滚轮向下缩小++++++++++')
-            if (scal == maxScal) {
-                scal = maxScal
-                return;
-            } else {
-                scal = (parseFloat(scal) - 0.01).toFixed(2);
-            }
-            // console.log("缩小系数: " + scal)
-            wall.style.transform = "scale(" + scal + ")";    //scale()在这里要使用拼接的方式才能生效。
-            wall.style.transformOrigin = "50% 50%";
-
+          scal = (parseFloat(scal) - 0.01).toFixed(2);
         }
-        // if (ev.preventDefault) {/*FF 和 Chrome*/
-        //     ev.preventDefault();// 阻止默认事件
-        // }
-        // return false;
-    }
+        // console.log("缩小系数: " + scal)
+        wall.style.transform = "scale(" + scal + ")"; //scale()在这里要使用拼接的方式才能生效。
+        wall.style.transformOrigin = "50% 50%";
+      }
+      // if (ev.preventDefault) {/*FF 和 Chrome*/
+      //     ev.preventDefault();// 阻止默认事件
+      // }
+      // return false;
+    };
 
-    wall.addEventListener("wheel", wheelscale, false)
+    wall.addEventListener("wheel", wheelscale, false);
 
     // 最小化按钮
     function wndClose(wndID) {
-        let wnd = document.getElementById(wndID)
-        // console.log(wnd.className)
-        wnd.className = wnd.className + " wndClosing"
-        setTimeout(function () {
-            wnd.style.display = "none"; wnd.className = wnd.className.replace(" wndClosing", "")
-        }, 1000)
-        updatePreview("off");
+      let wnd = document.getElementById(wndID);
+      // console.log(wnd.className)
+      wnd.className = wnd.className + " wndClosing";
+      setTimeout(function () {
+        wnd.style.display = "none";
+        wnd.className = wnd.className.replace(" wndClosing", "");
+      }, 1000);
+      updatePreview("off");
     }
 
     function sideBarToggle(sideBarID, operation, that) {
-        if (rotating) return;
-        // console.log(that.id)
-        that.style.pointerEvents="none"
-        btn_rotate_animation(that.id);
-        let leftContainer = document.getElementById("leftContainer")
-        if (operation == "open") {
-            leftContainer.style.display = "flex"
-            leftContainer.className = leftContainer.className + " sideBarOpening"
-            setTimeout(function () {
-                leftContainer.className = leftContainer.className.replace(" sideBarOpening","")
-                that.style.pointerEvents=""
-            }, 500)
-        } else {
-            leftContainer.className = leftContainer.className + " sideBarClosing"
-            setTimeout(function () {
-                leftContainer.className = leftContainer.className.replace(" sideBarClosing","")
-                leftContainer.style.display = "none"
-                that.style.pointerEvents=""
-            }, 500)
-        }
+      if (rotating) return;
+      // console.log(that.id)
+      that.style.pointerEvents = "none";
+      btn_rotate_animation(that.id);
+      let leftContainer = document.getElementById("leftContainer");
+      if (operation == "open") {
+        leftContainer.style.display = "flex";
+        leftContainer.className = leftContainer.className + " sideBarOpening";
+        setTimeout(function () {
+          leftContainer.className = leftContainer.className.replace(
+            " sideBarOpening",
+            ""
+          );
+          that.style.pointerEvents = "";
+        }, 500);
+      } else {
+        leftContainer.className = leftContainer.className + " sideBarClosing";
+        setTimeout(function () {
+          leftContainer.className = leftContainer.className.replace(
+            " sideBarClosing",
+            ""
+          );
+          leftContainer.style.display = "none";
+          that.style.pointerEvents = "";
+        }, 500);
+      }
     }
 
     var signBtns = document.getElementsByClassName("leftBox_sign");
     for (let i = 0; i < signBtns.length; i++) {
-        signBtns[i].onmousedown = function () {
-            this.style.backgroundColor = "rgba(255,255,255,1)"
-        }
-        signBtns[i].onmouseup = function () {
-            this.style.backgroundColor = "rgba(255,255,255,0.9)"
-        }
+      signBtns[i].onmousedown = function () {
+        this.style.backgroundColor = "rgba(255,255,255,1)";
+      };
+      signBtns[i].onmouseup = function () {
+        this.style.backgroundColor = "rgba(255,255,255,0.9)";
+      };
     }
-
-</script>
-
+  </script>
 </html>
