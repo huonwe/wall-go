@@ -131,7 +131,7 @@ function showPreviewMsg() {
     // let temp_div_userinfo;
     if (haraxi_fake.length == 0) {
         // 初始化元素
-        console.log("SSSSSSSS");
+        // console.log("SSSSSSSS");
         userInfo = JSON.parse(window.localStorage.getItem("user"));
         temp_div = document.createElement("div");
         temp_div_content = document.createElement("div");
@@ -162,8 +162,8 @@ function showPreviewMsg() {
         temp_div.style.height = aera.parentElement.style.height;
     }
 
-    temp_div_content.innerHTML = convertContent(aera.value);
-
+    temp_div_content.innerHTML = convertContent(aera.value)
+    // console.log(temp_div_content.innerHTML)
     temp_div_content.style.fontSize = aera.style.fontSize;
     // temp_div_content.style.border = aera.style.border;
     temp_div.style.borderRadius = aera.style.borderRadius;
@@ -296,15 +296,43 @@ function signUp() {
 }
 
 function convertContent(msg) {
-    var regObj = new RegExp("(<[a-z]+&nbsp;[\\s\\S]+</[a-z]+>)+", "g");
+    // var re1 = /\{%[^\\{\\}]+%\\}/g
+    // var re2 = /[&nbsp;]+/
+    // var reo = new RegExp("\{%[^\\{\\}]+%\\}","g")
+    // var regObj = new RegExp("(<[a-z]+&nbsp;[\\s\\S]+</[a-z]+>)+", "g");
+    // let value = msg.replaceAll(/[\n]/gi, "<br/>");
+    // value = value.replaceAll(/[\s]/gi, "&nbsp;");
+    // value = value.replaceAll(re1, function (rs) {
+    //     console.log("RS:"+rs)
+    //     rs = rs.replaceAll("\{%","")
+    //     rs = rs.replaceAll("%\}","")
+        
+    //     return rs
+    // });
+    // value = value.replaceAll(re1," ")
+    // value = value.replaceAll("&nbsp;"," ")
+    // console.log("RESULT:"+value)
+    // return value;
+
+    let re1 = /~[^~]*~/g  // {% ... %}
+    // console.log("VALUEA",msg)
     let value = msg.replaceAll(/[\n]/gi, "<br/>");
     value = value.replaceAll(/[\s]/gi, "&nbsp;");
-    value = value.replaceAll(regObj, function (rs) {
-        // console.log("RS:"+rs)
-        return rs.replaceAll("&nbsp;", " ");
-    });
-    // console.log("RESULT:"+value)
-    return value;
+    // console.log("VALUEB:",value)
+    value = value.replaceAll(re1,function(match){
+        // console.log("MATCH",match)
+        let r = match.replaceAll("<br/>"," ")
+        r = r.replaceAll("&nbsp;"," ")
+        // r = r.replaceAll("")
+        r = r.replaceAll(/[\s]+/g," ")
+        // console.log("REPED",r)
+        return r;
+    })
+    // console.log("VALUEC:",value)
+    value = value.replaceAll("~","")
+    // value = value.replaceAll("$","")
+    // console.log("VALUE:",value)
+    return value
 }
 
 window.onload = function () {

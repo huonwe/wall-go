@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 
 	"gorm.io/gorm"
 )
@@ -135,4 +136,52 @@ func deleteInterface(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	makeResp(w, 200, "success", nil)
+}
+
+func storeAddInterface(w http.ResponseWriter, req *http.Request) {
+	q := tokenReader(req)
+	UserID := UIDReader(q)
+	data := postReader(req)
+	d := Storage{UserID: UserID, Key: data["Key"], Value: data["Value"]}
+	db.Create(&d)
+}
+
+func storeQueryInterface(w http.ResponseWriter, req *http.Request) {
+	q := tokenReader(req)
+	UserID := UIDReader(q)
+	data := postReader(req)
+	d := Storage{UserID: UserID, Key: data["Key"]}
+	UserData := new(Storage)
+	tx := db.Where(&d).Find(&UserData)
+	if tx.Error != nil {
+		makeResp(w, 201, tx.Error.Error(), nil)
+		return
+	}
+	makeResp(w, 201, "success", UserData)
+}
+
+func storeUpdateInterface(w http.ResponseWriter, req *http.Request) {
+	q := tokenReader(req)
+	UserID := UIDReader(q)
+	data := postReader(req)
+
+	d := Storage{UserID: UserID, Key: data["Key"]}
+
+	exist := new(Storage)
+	db.Where(&d).Find(&exist)
+	if exist.ID == 0 {
+		d.Value = "1"
+		db.Create(&d)
+		makeResp(w, 200, "success", d.Value)
+	} else {
+		if data["Value"] == "++" {
+			new_Value, _ := strconv.Atoi(exist.Value)
+			new_Value += 1
+			exist.Value = strconv.Itoa(new_Value)
+		} else {
+			exist.Value = data["Value"]
+		}
+		db.Save(&exist)
+		makeResp(w, 200, "success", exist.Value)
+	}
 }

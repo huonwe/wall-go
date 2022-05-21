@@ -49,6 +49,9 @@ func main() {
 
 	mux.HandleFunc("/wall/delete", deleteInterface)
 
+	mux.HandleFunc("/storage/add", storeAddInterface)
+	mux.HandleFunc("/storage/query", storeQueryInterface)
+	mux.HandleFunc("/storage/update", storeUpdateInterface)
 	// mux.HandleFunc("/hellow", hellowView)
 
 	// mux.HandleFunc("/panic", panicView)

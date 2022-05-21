@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net"
 	"net/http"
 	"strconv"
@@ -15,6 +16,7 @@ var nowDate = time.Now().Format("2006-01-02 15")
 var secret = fmt.Sprintf("%v%v", nowDate, "dF13ayZ")
 
 type MapClaims map[string]interface{}
+type StrStr map[string]string
 
 // GenerateToken 生成Token值
 func GenerateToken(mapClaims jwt.MapClaims, key string) (string, error) {
@@ -114,6 +116,13 @@ func UIDReader(q map[string]interface{}) uint64 {
 	UserID := q["UserID"].(string)
 	uid, _ := strconv.Atoi(UserID)
 	return uint64(uid)
+}
+
+func postReader(req *http.Request) map[string]string {
+	con, _ := ioutil.ReadAll(req.Body)
+	data := make(StrStr)
+	_ = json.Unmarshal(con, &data)
+	return data
 }
 
 func RemoteIp(req *http.Request) string {
