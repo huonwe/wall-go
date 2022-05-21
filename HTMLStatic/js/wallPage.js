@@ -322,7 +322,7 @@ window.onload = function () {
             }
             signBox.style.display = "none";
             navBox.style.display = "flex";
-            window.localStorage.setItem("user", JSON.stringify(resp.data));
+            localStorage.setItem("user", JSON.stringify(resp.data));
         }
     };
 };
@@ -375,7 +375,7 @@ function hanashiPlacement(data) {
     // temp_div.appendChild(temp_div_content);
     // console.log(data)
     temp_div.onclick = function () {
-        console.log(data)
+        // console.log(data)
         updatePreview("off");
         // document.getElementsByClassName("haraxi_fake")[0].remove()
         // rightContainer.getElementsByClassName("titleName")[0].innerHTML = this.getElementsByClassName("titleStore")[0].innerHTML
@@ -393,6 +393,18 @@ function hanashiPlacement(data) {
         let style = document.createElement("div");
         style.name = "likeStyle";
 
+        let user = localStorage.getItem("user")
+        user = JSON.parse(user)
+        console.log(user.Administrator)
+        if(user.Administrator){
+            console.log("Admin")
+            let delBtn = document.createElement("button")
+            delBtn.innerText="del"
+            delBtn.className="delBtn"
+            delBtn.setAttribute("onclick", "delHanashi("+data.ID+")");
+            btns.appendChild(delBtn)
+        }
+        
         let data_ = {
             MessageID: data.ID,
         };
@@ -445,4 +457,21 @@ function showWrite() {
         document.getElementsByName("_writeBox")[0].innerHTML;
     rightContainer.getElementsByClassName("btnGroup")[0].innerHTML = "";
     rightContainer.style.display = "flex";
+}
+
+
+function delHanashi(hanashiID){
+    let xhr = new XMLHttpRequest()
+    let data = {
+        "MessageID":hanashiID
+    }
+    xhr.open("POST","/wall/delete",true)
+    xhr.send(JSON.stringify(data))
+    xhr.onload = function(){
+        if(xhr.status == 200){
+            console.log(xhr.response)
+            let result = JSON.parse(xhr.response)
+            showTips(result.msg)
+        }
+    }
 }

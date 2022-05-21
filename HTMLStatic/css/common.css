@@ -427,3 +427,9 @@
     background-size: contain;
     background-color: black; */
 }
+
+
+.delBtn {
+    height: 32px;
+    width: 32px;
+}

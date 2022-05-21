@@ -47,6 +47,8 @@ func main() {
 	mux.HandleFunc("/wall/unlike", unlikeInterface)
 	mux.HandleFunc("/wall/impact", impactInterface)
 
+	mux.HandleFunc("/wall/delete", deleteInterface)
+
 	// mux.HandleFunc("/hellow", hellowView)
 
 	// mux.HandleFunc("/panic", panicView)

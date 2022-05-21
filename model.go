@@ -7,16 +7,17 @@ import (
 )
 
 type User struct {
-	ID         uint64 `gorm:"primarykey;autoIncrement"`
-	UUID       string `gorm:"unique"`
-	UserName   string `gorm:"unique"`
-	Phone      string
-	Password   string
-	Avatar     string
-	Messages   []Message
-	ThumbCombs []ThumbComb
-	CreatedAt  time.Time
-	UpdatedAt  time.Time
+	ID            uint64 `gorm:"primarykey;autoIncrement"`
+	UUID          string `gorm:"unique"`
+	Administrator bool
+	UserName      string `gorm:"unique"`
+	Phone         string
+	Password      string
+	Avatar        string
+	Messages      []Message
+	ThumbCombs    []ThumbComb
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
 }
 
 type ThumbComb struct {
@@ -76,9 +77,10 @@ type MessageFront struct {
 }
 
 type UserFront struct {
-	ID       uint64
-	UserName string
-	Avatar   string
+	ID            uint64
+	UserName      string
+	Avatar        string
+	Administrator bool
 	// ThumbCombs []ThumbComb
 	// Phone    string
 }

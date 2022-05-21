@@ -110,3 +110,29 @@ func impactInterface(w http.ResponseWriter, req *http.Request) {
 	}
 
 }
+
+func deleteInterface(w http.ResponseWriter, req *http.Request) {
+	q := tokenReader(req)
+	UserID := UIDReader(q)
+	user := new(User)
+	db.Model(&User{}).First(&user, UserID)
+	if !user.Administrator {
+		makeResp(w, 201, "no permission", nil)
+		return
+	}
+
+	con, _ := ioutil.ReadAll(req.Body)
+	// fmt.Println("post data: ", string(con))
+	data := Response{
+		"MessageID": 0,
+	}
+	_ = json.Unmarshal(con, &data)
+	// fmt.Println("JSON:", data)
+
+	tx := db.Delete(&Message{}, data["MessageID"])
+	if tx.Error != nil {
+		makeResp(w, 200, tx.Error.Error(), nil)
+		return
+	}
+	makeResp(w, 200, "success", nil)
+}
