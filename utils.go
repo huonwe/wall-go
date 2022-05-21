@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -107,6 +108,12 @@ func tokenReader(req *http.Request) map[string]interface{} {
 	token, _ := req.Cookie("token")
 	q, _ := ParseToken(token.Value, secret) // 解析token
 	return q
+}
+
+func UIDReader(q map[string]interface{}) uint64 {
+	UserID := q["UserID"].(string)
+	uid, _ := strconv.Atoi(UserID)
+	return uint64(uid)
 }
 
 func RemoteIp(req *http.Request) string {

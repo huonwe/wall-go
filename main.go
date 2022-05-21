@@ -41,6 +41,9 @@ func main() {
 	mux.HandleFunc("/add", addView)
 	mux.HandleFunc("/user", userView)
 	mux.HandleFunc("/getUserInfo", getUserInfoView)
+	mux.HandleFunc("/wall/like", likeInterface)
+	mux.HandleFunc("/wall/unlike", unlikeInterface)
+	mux.HandleFunc("/wall/impact", impactInterface)
 
 	// mux.HandleFunc("/hellow", hellowView)
 

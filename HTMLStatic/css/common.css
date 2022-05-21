@@ -1,7 +1,7 @@
 :root {
     --wnd-height: 80%;
     --wnd-width: 24%;
-    --sidebar-width : 18%;
+    --sidebar-width: 18%;
 
     --user-view-zindex: 16;
 }
@@ -17,6 +17,19 @@
     z-index: var(--user-view-zindex);
     /* position: fixed; */
 }
+
+.flexRow {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.flexCol {
+    display: flex;
+    flex-direction: column;
+}
+
 
 .flexRight {
     /* align-items: flex-end; */
@@ -71,11 +84,19 @@
     border-bottom: 1px solid green;
 }
 
+.wnd .firstTitle {
+    border-bottom: 1px solid rgb(0, 49, 128);
+}
+
+.wnd .secTitle {
+    border-bottom: 1px solid green;
+}
+
 .title .operator {
     display: flex;
     height: 36px;
     width: fit-content;
-    align-items:center;
+    align-items: center;
     justify-content: center;
     border-right: 1px solid gray;
     /* align-self: flex-start; */
@@ -99,16 +120,17 @@
     /* height: 95%; */
 }
 
-.operator svg:hover {
-    cursor: pointer;
-    background-color: rgba(245, 235, 225, 0.4);
-    border-radius: 50%;
-    /* height: 95%; */
+.operator .likeBtn {
+    padding-right: 10px;
 }
+
+/* .likeBtn *:hover {
+    background-color: rgba(245, 235, 225, 0.4);
+} */
 
 .title .titleName {
     overflow: hidden;
-    white-space:nowrap;
+    white-space: nowrap;
     padding-left: 10px;
     flex: 1;
     min-width: 60px;
@@ -122,6 +144,98 @@
 
     /* border: 1px solid black; */
 }
+
+.titleName button {
+    max-width: 95%;
+    max-height: 95%;
+    border: 0;
+    border-radius: 50%;
+}
+
+.wnd .btnGroup {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    border-bottom: 1px solid pink;
+    max-height: 32px;
+    height: fit-content;
+    width: 100%;
+    /* background-color: blue; */
+}
+
+.wnd .btnGroup button {
+    background-color: rgba(255, 255, 255, 0.9);
+    width: fit-content;
+    max-width: 64px;
+    max-height: 95%;
+    border: 0;
+}
+
+.wnd .btnGroup button:hover {
+    cursor: pointer;
+    background-color: rgba(245, 235, 225, 0.4);
+    /* border-radius: 50%; */
+}
+
+.like {
+    color: black;
+}
+
+.like::after {
+    content: "赞";
+    font-weight: bold;
+}
+
+.liked {
+    color: rgb(50, 150, 250);
+}
+
+.liked::after {
+    content: "赞";
+    font-weight: bolder;
+}
+
+.smiley {
+    width: 32px;
+    height: 32px;
+    background-image: url(/HTMLStatic/css/smiley.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.ok {
+    width: 32px;
+    height: 32px;
+    background-image: url(/HTMLStatic/css/OK.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.thumb {
+    object-fit: cover;
+    object-position: center;
+    width: 32px;
+    height: 32px;
+    background-image: url(/HTMLStatic/css/thumb.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+/* .thumb:hover  {
+    cursor: pointer;
+    background-color: rgba(245, 235, 225, 0.4);
+} */
+
+.thumb_liked {
+    object-fit: cover;
+    object-position: center;
+    width: 32px;
+    height: 32px;
+    background-image: url(/HTMLStatic/css/thumb-liked.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
 
 .titleName img {
     max-width: 95%;
@@ -143,7 +257,7 @@
     /* align-self: flex-end; */
     float: right;
     justify-self: flex-end;
-    
+
     /* border: 1px solid black; */
 }
 
@@ -159,11 +273,6 @@
     padding-bottom: 10px;
 }
 
-.flexCol {
-    display: flex;
-    flex-direction: column;
-}
-
 .sideBar {
     user-select: none;
     display: flex;
@@ -177,7 +286,7 @@
 
     background-color: rgba(90, 219, 245, 1);
     border-radius: 0em 2em 0em 0em;
-    
+
     /* background-color: rgba(255, 255, 255, 1); */
 }
 

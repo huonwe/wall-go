@@ -335,6 +335,10 @@ function hanashiPlacement(data) {
     titleStore.style.display = "none"
     titleStore.className = "titleStore"
 
+    // let thumb = document.createElement("div")
+    // thumb.className = "thumb"
+    // thumb.onclick = 
+
     let avatar = document.createElement("img")
     if (data.User.Avatar != "") {
         avatar.src = data.User.Avatar
@@ -350,21 +354,54 @@ function hanashiPlacement(data) {
     createTime.innerText = data.CreatedAt.split(".")[0].replace("T", " ")
     createTime.className = "createTime"
     // console.log(data.User)
+    // console.log(thumb)
     titleStore.append(createTime, avatar, username)  // username avatar
-    titleStore.innerText = titleStore.innerHTML
+    // titleStore.innerText = titleStore.innerHTML
 
     temp_div_content.innerHTML = convertContent(data.Content);
     temp_div_content.className = "text";
     temp_div_content.style.fontSize = data.FontSize
 
     temp_div.append(temp_div_content, titleStore)
+    temp_div.name = data.ID
     // temp_div.appendChild(temp_div_content);
-
+    // console.log(data)
     temp_div.onclick = function () {
-        rightContainer.getElementsByClassName("body")[0].innerHTML = this.getElementsByClassName("text")[0].innerHTML
-        rightContainer.getElementsByClassName("titleName")[0].innerHTML = this.getElementsByClassName("titleStore")[0].innerText
-        rightContainer.style.display = "flex";
-
+        
+        // rightContainer.getElementsByClassName("titleName")[0].innerHTML = this.getElementsByClassName("titleStore")[0].innerHTML
+        rightContainer.getElementsByClassName("titleName")[0].innerHTML = titleStore.innerHTML
+        rightContainer.getElementsByClassName("titleName")[0].id = data.ID
+        rightContainer.getElementsByClassName("body")[0].innerHTML = convertContent(data.Content)
+        rightContainer.getElementsByClassName("")
+        let data_ = {
+            "MessageID": data.ID
+        }
+        let xhr = new XMLHttpRequest()
+        xhr.open("POST", "/wall/impact", true)
+        xhr.send(JSON.stringify(data_))
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                let resp = JSON.parse(xhr.response)
+                console.log(resp)
+                if (resp.code != 200) {
+                    if(resp.code == 201) alert(resp.msg);
+                    return;
+                }
+                if(resp.msg == "liked"){
+                    document.getElementsByName("likeCombine_ico")[0].className = "ok"
+                    // console.log(that)
+                    document.getElementsByName("likeCombine_word")[0].className = "liked"
+                }else{
+                    document.getElementsByName("likeCombine_ico")[0].className = "smiley"
+                    // console.log(that)
+                    document.getElementsByName("likeCombine_word")[0].className = "like"
+                }
+                rightContainer.style.display = "flex";
+            }else if(xhr.readyState == 4 && xhr.status != 200){
+                alert("无法连接到服务器")
+                return
+            }
+        }
         // writeBox.style.display = "none";
         // box_show_animation("rightBox");
     }

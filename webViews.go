@@ -36,7 +36,7 @@ func getMessageView(w http.ResponseWriter, req *http.Request) {
 		result := db.Model(&Message{}).Joins("User").Find(&messages)
 		if result.Error != nil {
 			log.Println(result.Error)
-			makeResp(w, 200, result.Error.Error(), nil)
+			makeResp(w, 201, result.Error.Error(), nil)
 			return
 		}
 
