@@ -1,16 +1,22 @@
 <h3>你是大聪明吗？</h3>
-<div style="width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;">
-  <div style="width: 100%; text-align: center"
+<div
+  style="
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  "
+>
+  <div
+    style="width: 100%; text-align: center"
     onmouseover="this.style.backgroundColor='gray';this.style.cursor='pointer'"
-    onmouseout="this.style.backgroundColor='white'" onclick="let that= this;
+    onmouseout="this.style.backgroundColor='white'"
+    onclick="let that= this;
     let xhr= new XMLHttpRequest();
     xhr.open('POST','/storage/update',true);
     let data= {
-      'UserID': 1,
+    'UserID': 1,
     'Key':'count',
     'Value':'++'
     };
@@ -23,9 +29,9 @@
     that.innerText= '有'+result.data+'人次觉得自己是大聪明';
     }
     }
-
     }
-    }">
+    }"
+  >
     是！
   </div>
 </div>
