@@ -86,7 +86,7 @@
             <div class="entrance" onclick="location.href='/user/me'">
               个人中心
             </div>
-            <br>
+            <br />
             <div class="entrance" onclick="clearAllCookie()">退出登录</div>
           </div>
         </div>
@@ -218,17 +218,19 @@
                 onkeyup="this.value=this.value.replace(/[^\d]/g,'')"
                 onafterpaste="this.value=this.value.replace(/[^\d]/g,'')"
                 value="18"
+                onchange="updateOutStyle()"
               />
               px</span
             >
             &ensp;<span
               >弧度大小:<input
                 id="selectRadiusSize_input"
-                class="selectFontSize_input"
+                class="selectRadiusSize_input"
                 type="text"
                 onkeyup="this.value=this.value.replace(/[^\d]/g,'')"
                 onafterpaste="this.value=this.value.replace(/[^\d]/g,'')"
                 value="10"
+                onchange="updateOutStyle()"
               />
               px</span
             >
@@ -331,7 +333,7 @@
     let detailBox = document.getElementById("detailBox");
     let writeBox = document.getElementById("writeBox");
 
-    let editBox = document.getElementById("editBox");
+    
     function editUpdate(that) {
       let value = that.value.replace(/\n/g, "__!").replace(/\r/g, "__?");
       let html = value.replace(/__!/g, "\n").replace(/__?/g, "\s");
@@ -339,17 +341,30 @@
       updatePreview();
     }
 
-    // input style change
-    let selectFontSize_input = document.getElementById("selectFontSize_input");
-    let selectRadiusSize_input = document.getElementById(
-      "selectRadiusSize_input"
-    );
-    selectFontSize_input.onchange = function () {
+    function updateOutStyle() {
+      let editBox = rightContainer.getElementsByClassName("editBox")[0];
+      let selectFontSize_input = rightContainer.getElementsByClassName(
+        "selectFontSize_input"
+      )[0];
+      let selectRadiusSize_input = rightContainer.getElementsByClassName(
+        "selectRadiusSize_input"
+      )[0];
+      console.log(selectFontSize_input.value)
       editBox.style.fontSize = selectFontSize_input.value + "px";
-    };
-    selectRadiusSize_input.onchange = function () {
       editBox.style.borderRadius = selectRadiusSize_input.value + "px";
-    };
+    }
+
+    // input style change
+    // let selectFontSize_input = document.getElementById("selectFontSize_input");
+    // let selectRadiusSize_input = document.getElementById(
+    //   "selectRadiusSize_input"
+    // );
+    // selectFontSize_input.onchange = function () {
+    //   editBox.style.fontSize = selectFontSize_input.value + "px";
+    // };
+    // selectRadiusSize_input.onchange = function () {
+    //   editBox.style.borderRadius = selectRadiusSize_input.value + "px";
+    // };
 
     // 复写鼠标滚轮行为
     var wheelscale = function (ev) {

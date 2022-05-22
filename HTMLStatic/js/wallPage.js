@@ -164,6 +164,7 @@ function showPreviewMsg() {
 
     temp_div_content.innerHTML = convertContent(aera.value)
     // console.log(temp_div_content.innerHTML)
+    console.log("rad ",temp_div.style.borderRadius)
     temp_div_content.style.fontSize = aera.style.fontSize;
     // temp_div_content.style.border = aera.style.border;
     temp_div.style.borderRadius = aera.style.borderRadius;
@@ -296,24 +297,6 @@ function signUp() {
 }
 
 function convertContent(msg) {
-    // var re1 = /\{%[^\\{\\}]+%\\}/g
-    // var re2 = /[&nbsp;]+/
-    // var reo = new RegExp("\{%[^\\{\\}]+%\\}","g")
-    // var regObj = new RegExp("(<[a-z]+&nbsp;[\\s\\S]+</[a-z]+>)+", "g");
-    // let value = msg.replaceAll(/[\n]/gi, "<br/>");
-    // value = value.replaceAll(/[\s]/gi, "&nbsp;");
-    // value = value.replaceAll(re1, function (rs) {
-    //     console.log("RS:"+rs)
-    //     rs = rs.replaceAll("\{%","")
-    //     rs = rs.replaceAll("%\}","")
-        
-    //     return rs
-    // });
-    // value = value.replaceAll(re1," ")
-    // value = value.replaceAll("&nbsp;"," ")
-    // console.log("RESULT:"+value)
-    // return value;
-
     let re1 = /~[^~]*~/g  // {% ... %}
     // console.log("VALUEA",msg)
     let value = msg.replaceAll(/[\n]/gi, "<br/>");
@@ -396,7 +379,8 @@ function hanashiPlacement(data) {
 
     temp_div_content.innerHTML = convertContent(data.Content);
     temp_div_content.className = "text";
-    temp_div_content.style.fontSize = data.FontSize;
+    temp_div_content.style.fontSize = data.FontSize + "px";
+    temp_div_content.style.borderRadius = data.BorderRadius + "px";
 
     temp_div.append(temp_div_content, titleStore);
     temp_div.name = data.ID;
@@ -423,9 +407,9 @@ function hanashiPlacement(data) {
 
         let user = localStorage.getItem("user")
         user = JSON.parse(user)
-        console.log(user.Administrator)
+        // console.log(user.Administrator)
         if(user.Administrator){
-            console.log("Admin")
+            // console.log("Admin")
             let delBtn = document.createElement("button")
             delBtn.innerText="del"
             delBtn.className="delBtn"

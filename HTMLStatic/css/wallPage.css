@@ -148,6 +148,12 @@ body {
     height: 14px;
 }
 
+.selectRadiusSize_input {
+    display: inline;
+    width: 20px;
+    height: 14px;
+}
+
 .editBox {
     display: block;
     width: 8em;
