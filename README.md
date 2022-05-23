@@ -5,7 +5,7 @@
 现使用Go重写.
 
 # 环境需求
-ubuntu
+linux
 
 go 1.11+
 
