@@ -12,6 +12,3 @@ go 1.11+
 # 使用
     go build
     ./wall
-
-# demo
-http://120.55.170.139
