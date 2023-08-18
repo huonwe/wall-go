@@ -1,4 +1,4 @@
-
+![Image text](https://github.com/huonwe/wall-go/blob/main/static/example.png?raw=true)
 
 # wall-go
 网页随心贴
